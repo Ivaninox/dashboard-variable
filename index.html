@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard Marketing 2025</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', sans-serif; background: #0f172a; color: #e2e8f0; min-height: 100vh; padding: 32px; }
+
+  h1 { font-size: 24px; font-weight: 700; color: #f8fafc; margin-bottom: 4px; }
+  .subtitle { color: #94a3b8; font-size: 14px; margin-bottom: 32px; }
+
+  .last-update { font-size: 12px; color: #64748b; margin-bottom: 24px; }
+
+  /* KPI CARDS */
+  .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 40px; }
+  .kpi-card {
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 12px;
+    padding: 20px;
+  }
+  .kpi-label { font-size: 12px; color: #94a3b8; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 8px; }
+  .kpi-value { font-size: 28px; font-weight: 700; color: #f8fafc; }
+  .kpi-sub { font-size: 12px; color: #64748b; margin-top: 4px; }
+  .kpi-card.blue { border-top: 3px solid #6366f1; }
+  .kpi-card.green { border-top: 3px solid #10b981; }
+  .kpi-card.orange { border-top: 3px solid #f59e0b; }
+  .kpi-card.purple { border-top: 3px solid #a855f7; }
+
+  /* SECTION TITLE */
+  .section-title {
+    font-size: 16px; font-weight: 600; color: #cbd5e1;
+    margin-bottom: 16px; padding-bottom: 8px;
+    border-bottom: 1px solid #1e293b;
+  }
+
+  /* TABLES */
+  .table-wrap { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 24px; margin-bottom: 32px; overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th { text-align: left; padding: 10px 12px; color: #64748b; font-weight: 500; font-size: 12px; text-transform: uppercase; border-bottom: 1px solid #334155; }
+  td { padding: 12px; border-bottom: 1px solid #1e293b; color: #cbd5e1; vertical-align: middle; }
+  tr:last-child td { border-bottom: none; }
+
+  .badge { display: inline-block; padding: 2px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+  .badge.q1 { background: #1e3a5f; color: #60a5fa; }
+  .badge.q2 { background: #1e3a2f; color: #34d399; }
+  .badge.q3 { background: #3b2f1e; color: #fbbf24; }
+  .badge.q4 { background: #2d1e3b; color: #c084fc; }
+  .tag-futur { font-size: 10px; color: #475569; background: #1e293b; border: 1px solid #334155; border-radius: 4px; padding: 1px 6px; margin-left: 4px; }
+
+  .progress-wrap { background: #0f172a; border-radius: 99px; height: 8px; width: 120px; overflow: hidden; display: inline-block; vertical-align: middle; }
+  .progress-bar { height: 100%; border-radius: 99px; transition: width .6s ease; }
+  .progress-bar.green { background: linear-gradient(90deg, #10b981, #34d399); }
+  .progress-bar.orange { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+  .progress-bar.red { background: linear-gradient(90deg, #ef4444, #f87171); }
+  .pct { font-size: 12px; font-weight: 600; margin-left: 8px; vertical-align: middle; }
+
+  /* TARGET */
+  .target-val { color: #6366f1; font-weight: 500; }
+
+  /* LOADING */
+  #loading { text-align: center; padding: 60px; color: #64748b; font-size: 16px; }
+  #dashboard { display: none; }
+</style>
+</head>
+<body>
+
+<div id="loading">⏳ Chargement des données...</div>
+
+<div id="dashboard">
+  <h1>📊 Dashboard Marketing 2025</h1>
+  <p class="subtitle">Suivi des performances — Budget, Leads SEO, Inbound</p>
+  <p class="last-update" id="last-update"></p>
+
+  <!-- KPI CARDS -->
+  <div class="kpi-grid">
+    <div class="kpi-card blue">
+      <div class="kpi-label">Budget Digital Q1</div>
+      <div class="kpi-value" id="kpi-q1-digital">—</div>
+      <div class="kpi-sub">Dépensé</div>
+    </div>
+    <div class="kpi-card green">
+      <div class="kpi-label">Inbound Q1</div>
+      <div class="kpi-value" id="kpi-q1-inbound">—</div>
+      <div class="kpi-sub">Leads générés</div>
+    </div>
+    <div class="kpi-card orange">
+      <div class="kpi-label">Leads SEO Q1</div>
+      <div class="kpi-value" id="kpi-q1-leads-seo">—</div>
+      <div class="kpi-sub">Objectif : 75 (Q2) → 90 (Q4)</div>
+    </div>
+    <div class="kpi-card purple">
+      <div class="kpi-label">Total Leads SEO 2025</div>
+      <div class="kpi-value" id="kpi-total-leads">—</div>
+      <div class="kpi-sub">Cumulé toutes périodes</div>
+    </div>
+  </div>
+
+  <!-- TABLE BUDGET DIGITAL -->
+  <div class="table-wrap">
+    <div class="section-title">💰 Budget Digital</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Période</th>
+          <th>Réalisé</th>
+          <th>Progression</th>
+        </tr>
+      </thead>
+      <tbody id="table-digital"></tbody>
+    </table>
+  </div>
+
+  <!-- TABLE INBOUND -->
+  <div class="table-wrap">
+    <div class="section-title">📥 Leads Inbound</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Période</th>
+          <th>Réalisé</th>
+          <th>Progression</th>
+        </tr>
+      </thead>
+      <tbody id="table-inbound"></tbody>
+    </table>
+  </div>
+
+  <!-- TABLE LEADS SEO -->
+  <div class="table-wrap">
+    <div class="section-title">🔍 Leads SEO</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Période</th>
+          <th>Objectif</th>
+          <th>Réalisé</th>
+          <th>Progression</th>
+        </tr>
+      </thead>
+      <tbody id="table-seo"></tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTBJmcK5aCY8lIGqOLnvgcKjO1I8uZMI90XkUagFMUXqXXoD4QKMwPnyZNifpMseYiAfn6fIlxo0hTk/pub?output=csv";
+
+// Objectifs SEO par quarter
+const SEO_TARGETS = { q1: 75, q2: 75, q3: 85, q4: 90 };
+// Référence max pour barres Digital et Inbound (à ajuster selon tes budgets réels)
+const DIGITAL_REF = { q1: 20000, q2: 20000, q3: 20000, q4: 20000 };
+const INBOUND_REF = { q1: 150000, q2: 150000, q3: 150000, q4: 150000 };
+
+const QUARTERS = ['q1','q2','q3','q4'];
+const Q_LABELS = { q1: 'Q1', q2: 'Q2', q3: 'Q3', q4: 'Q4' };
+const Q_BADGE = { q1: 'q1', q2: 'q2', q3: 'q3', q4: 'q4' };
+
+function fmt(n) {
+  if (n === null || n === undefined || isNaN(n)) return '—';
+  return n.toLocaleString('fr-FR');
+}
+
+function progressBar(value, max) {
+  if (!value || !max) return '<span style="color:#475569">—</span>';
+  const pct = Math.min(Math.round((value / max) * 100), 100);
+  const color = pct >= 100 ? 'green' : pct >= 60 ? 'green' : pct >= 30 ? 'orange' : 'red';
+  const textColor = pct >= 60 ? '#10b981' : pct >= 30 ? '#f59e0b' : '#ef4444';
+  return `<div class="progress-wrap"><div class="progress-bar ${color}" style="width:${pct}%"></div></div>
+          <span class="pct" style="color:${textColor}">${pct}%</span>`;
+}
+
+function isFutur(q, data) {
+  // Considéré "futur" si toutes les valeurs du quarter sont 0
+  return (data[`${q}_digital`] || 0) === 0 &&
+         (data[`${q}_inbound`] || 0) === 0 &&
+         (data[`${q}_leads_seo`] || 0) === 0;
+}
+
+function parseCSV(text) {
+  const data = {};
+  const lines = text.trim().split('\n');
+  lines.forEach(line => {
+    const parts = line.split(',');
+    if (parts.length >= 2) {
+      const key = parts[0].trim();
+      const val = parseFloat(parts[1].trim().replace(/\s/g,''));
+      data[key] = isNaN(val) ? 0 : val;
+    }
+  });
+  return data;
+}
+
+function buildDigitalTable(data) {
+  const tbody = document.getElementById('table-digital');
+  tbody.innerHTML = '';
+  QUARTERS.forEach(q => {
+    const val = data[`${q}_digital`] || 0;
+    const futur = q !== 'q1' && val === 0;
+    const ref = DIGITAL_REF[q];
+    tbody.innerHTML += `
+      <tr>
+        <td>
+          <span class="badge ${Q_BADGE[q]}">${Q_LABELS[q]}</span>
+          ${futur ? '<span class="tag-futur">À venir</span>' : ''}
+        </td>
+        <td>${val ? fmt(val) + ' €' : '<span style="color:#475569">—</span>'}</td>
+        <td>${futur ? '<span style="color:#475569">—</span>' : progressBar(val, ref)}</td>
+      </tr>`;
+  });
+}
+
+function buildInboundTable(data) {
+  const tbody = document.getElementById('table-inbound');
+  tbody.innerHTML = '';
+  QUARTERS.forEach(q => {
+    const val = data[`${q}_inbound`] || 0;
+    const futur = q !== 'q1' && val === 0;
+    const ref = INBOUND_REF[q];
+    tbody.innerHTML += `
+      <tr>
+        <td>
+          <span class="badge ${Q_BADGE[q]}">${Q_LABELS[q]}</span>
+          ${futur ? '<span class="tag-futur">À venir</span>' : ''}
+        </td>
+        <td>${val ? fmt(val) : '<span style="color:#475569">—</span>'}</td>
+        <td>${futur ? '<span style="color:#475569">—</span>' : progressBar(val, ref)}</td>
+      </tr>`;
+  });
+}
+
+function buildSeoTable(data) {
+  const tbody = document.getElementById('table-seo');
+  tbody.innerHTML = '';
+  QUARTERS.forEach(q => {
+    const val = data[`${q}_leads_seo`] || 0;
+    const target = SEO_TARGETS[q];
+    const futur = q !== 'q1' && val === 0;
+    tbody.innerHTML += `
+      <tr>
+        <td>
+          <span class="badge ${Q_BADGE[q]}">${Q_LABELS[q]}</span>
+          ${futur ? '<span class="tag-futur">À venir</span>' : ''}
+        </td>
+        <td class="target-val">${target}</td>
+        <td>${val ? fmt(val) : '<span style="color:#475569">—</span>'}</td>
+        <td>${futur ? '<span style="color:#475569">—</span>' : progressBar(val, target)}</td>
+      </tr>`;
+  });
+}
+
+function updateKPIs(data) {
+  document.getElementById('kpi-q1-digital').textContent =
+    data['q1_digital'] ? fmt(data['q1_digital']) + ' €' : '—';
+  document.getElementById('kpi-q1-inbound').textContent =
+    data['q1_inbound'] ? fmt(data['q1_inbound']) : '—';
+  document.getElementById('kpi-q1-leads-seo').textContent =
+    data['q1_leads_seo'] ? fmt(data['q1_leads_seo']) : '—';
+
+  const total = QUARTERS.reduce((acc, q) => acc + (data[`${q}_leads_seo`] || 0), 0);
+  document.getElementById('kpi-total-leads').textContent = fmt(total);
+
+  document.getElementById('last-update').textContent =
+    '🕐 Dernière mise à jour : ' + new Date().toLocaleString('fr-FR');
+}
+
+async function loadData() {
+  try {
+    const res = await fetch(CSV_URL);
+    const text = await res.text();
+    const data = parseCSV(text);
+
+    updateKPIs(data);
+    buildDigitalTable(data);
+    buildInboundTable(data);
+    buildSeoTable(data);
+
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('dashboard').style.display = 'block';
+  } catch (e) {
+    document.getElementById('loading').textContent = '❌ Erreur de chargement. Vérifiez que le CSV est bien publié.';
+    console.error(e);
+  }
+}
+
+loadData();
+// Refresh toutes les 5 minutes
+setInterval(loadData, 5 * 60 * 1000);
+</script>
+</body>
+</html>
