@@ -1,264 +1,294 @@
-<!DOCTYPE html>
+html_content = '''<!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dashboard Variable</title>
+<title>Dashboard Marketing 2025</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { background: #1a2234; color: #e2e8f0; font-family: 'Segoe UI', sans-serif; padding: 30px; }
-  h1 { text-align: center; font-size: 1.8rem; margin-bottom: 8px; color: #fff; }
-  .subtitle { text-align: center; color: #94a3b8; margin-bottom: 30px; font-size: 0.9rem; }
+  body { background: #1a2234; color: #e2e8f0; font-family: "Segoe UI", sans-serif; padding: 30px; }
+  h1 { font-size: 1.8rem; font-weight: 700; color: #fff; }
+  .subtitle { color: #94a3b8; font-size: 0.9rem; margin-bottom: 6px; }
+  .last-update { font-size: 0.75rem; color: #64748b; margin-bottom: 28px; }
+
+  /* RECAP ANNUEL */
+  .annuel-section { background: #1e293b; border: 1px solid #2d3f5e; border-radius: 14px; padding: 24px; margin-bottom: 24px; }
+  .annuel-section h2 { font-size: 1rem; color: #cbd5e1; margin-bottom: 18px; }
+  .annuel-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .annuel-card { background: #243047; border-radius: 10px; padding: 18px; text-align: center; }
+  .annuel-card .alabel { font-size: 0.7rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+  .annuel-card .avalue { font-size: 1.6rem; font-weight: 700; margin-bottom: 4px; }
+  .annuel-card .asub { font-size: 0.72rem; color: #64748b; }
+  .annuel-card .abar-bg { background: #1a2234; border-radius: 99px; height: 6px; margin-top: 10px; overflow: hidden; }
+  .annuel-card .abar-fg { height: 6px; border-radius: 99px; transition: width 0.6s; }
 
   /* KPI CARDS */
-  .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 30px; }
-  .kpi-card { background: #243047; border-radius: 12px; padding: 20px; text-align: center; border: 1px solid #2d3f5e; }
-  .kpi-card .label { font-size: 0.75rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
-  .kpi-card .value { font-size: 1.8rem; font-weight: 700; }
+  .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+  .kpi-card { background: #243047; border-radius: 12px; padding: 20px; border-top: 3px solid; }
+  .kpi-card.blue { border-color: #60a5fa; }
+  .kpi-card.green { border-color: #4ade80; }
+  .kpi-card.yellow { border-color: #fbbf24; }
+  .kpi-card.purple { border-color: #a78bfa; }
+  .kpi-card .label { font-size: 0.7rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+  .kpi-card .value { font-size: 2rem; font-weight: 700; color: #fff; }
   .kpi-card .sub { font-size: 0.75rem; color: #64748b; margin-top: 4px; }
-  .green { color: #4ade80; }
-  .red { color: #f87171; }
-  .yellow { color: #fbbf24; }
-  .blue { color: #60a5fa; }
 
-  /* VARIABLE BADGE */
-  .variable-banner { border-radius: 12px; padding: 16px 24px; margin-bottom: 30px; text-align: center; font-size: 1rem; font-weight: 600; }
+  /* VARIABLE BANNER */
+  .variable-banner { border-radius: 12px; padding: 14px 24px; margin-bottom: 24px; text-align: center; font-size: 0.95rem; font-weight: 600; }
   .variable-on { background: #14532d; border: 1px solid #4ade80; color: #4ade80; }
   .variable-off { background: #450a0a; border: 1px solid #f87171; color: #f87171; }
 
   /* TABLES */
-  .section { background: #243047; border-radius: 12px; padding: 24px; margin-bottom: 24px; border: 1px solid #2d3f5e; }
-  .section h2 { font-size: 1rem; margin-bottom: 16px; color: #cbd5e1; text-transform: uppercase; letter-spacing: 1px; }
+  .section { background: #243047; border-radius: 12px; padding: 24px; margin-bottom: 20px; border: 1px solid #2d3f5e; }
+  .section h2 { font-size: 0.95rem; margin-bottom: 18px; color: #cbd5e1; }
   table { width: 100%; border-collapse: collapse; }
-  th { text-align: left; padding: 8px 12px; font-size: 0.75rem; color: #64748b; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid #2d3f5e; }
-  td { padding: 12px; font-size: 0.875rem; border-bottom: 1px solid #1e293b; }
+  th { text-align: left; padding: 8px 12px; font-size: 0.7rem; color: #64748b; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid #2d3f5e; }
+  td { padding: 12px; font-size: 0.875rem; border-bottom: 1px solid #1e293b; vertical-align: middle; }
   tr:last-child td { border-bottom: none; }
-  .quarter-badge { background: #1e3a5f; color: #60a5fa; padding: 3px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; }
-  .progress-bar { background: #1e293b; border-radius: 20px; height: 8px; width: 100%; }
-  .progress-fill { height: 8px; border-radius: 20px; }
-  .fill-green { background: #4ade80; }
-  .fill-yellow { background: #fbbf24; }
-  .fill-red { background: #f87171; }
 
-  /* RECAP */
-  .recap-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 16px; }
-  .recap-card { background: #1e293b; border-radius: 10px; padding: 14px; text-align: center; border: 1px solid #2d3f5e; }
-  .recap-card .q-label { font-size: 0.7rem; color: #64748b; text-transform: uppercase; margin-bottom: 6px; }
-  .recap-card .q-status { font-size: 1rem; font-weight: 700; }
+  .q-badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 0.72rem; font-weight: 700; }
+  .q1 { background: #1e3a5f; color: #60a5fa; }
+  .q2 { background: #14532d; color: #4ade80; }
+  .q3 { background: #451a03; color: #fbbf24; }
+  .q4 { background: #2e1065; color: #a78bfa; }
+  .avenir { display: inline-block; padding: 2px 8px; border-radius: 20px; font-size: 0.65rem; background: #1e293b; color: #475569; margin-left: 6px; }
 
-  #loading { text-align: center; padding: 60px; font-size: 1.2rem; color: #94a3b8; }
+  .bar-bg { background: #1a2234; border-radius: 99px; height: 8px; width: 180px; overflow: hidden; display: inline-block; vertical-align: middle; margin-right: 10px; }
+  .bar-fg { height: 8px; border-radius: 99px; }
+  .pct-label { font-size: 0.8rem; font-weight: 600; }
+
+  /* RECAP VARIABLE PAR QUARTER */
+  .recap-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 8px; }
+  .recap-card { background: #1e293b; border-radius: 10px; padding: 16px; border: 1px solid #2d3f5e; }
+  .recap-card .ql { font-size: 0.8rem; font-weight: 700; color: #cbd5e1; margin-bottom: 6px; }
+  .recap-card .qs { font-size: 0.85rem; font-weight: 700; margin-bottom: 8px; }
+  .recap-card .qd { font-size: 0.7rem; color: #64748b; line-height: 1.6; }
+
+  #loading { text-align: center; padding: 60px; color: #64748b; font-size: 1rem; }
   #content { display: none; }
 </style>
 </head>
 <body>
 
 <div id="loading">⏳ Chargement des données...</div>
+
 <div id="content">
-  <h1>📊 Dashboard Variable</h1>
-  <p class="subtitle" id="last-update"></p>
+  <h1>📊 Dashboard Marketing 2025</h1>
+  <p class="subtitle">Suivi des performances — CA Digital, Leads SEO, Inbound</p>
+  <p class="last-update" id="last-update"></p>
 
-  <!-- Variable Banner -->
-  <div class="variable-banner" id="variable-banner"></div>
-
-  <!-- KPI Cards -->
-  <div class="kpi-grid">
-    <div class="kpi-card">
-      <div class="label">Objectif Global</div>
-      <div class="value blue" id="kpi-global">-</div>
-      <div class="sub">Atteinte moyenne</div>
-    </div>
-    <div class="kpi-card">
-      <div class="label">Budget Digital</div>
-      <div class="value" id="kpi-digital">-</div>
-      <div class="sub" id="kpi-digital-sub"></div>
-    </div>
-    <div class="kpi-card">
-      <div class="label">Inbound</div>
-      <div class="value" id="kpi-inbound">-</div>
-      <div class="sub" id="kpi-inbound-sub"></div>
-    </div>
-    <div class="kpi-card">
-      <div class="label">Leads SEO</div>
-      <div class="value" id="kpi-seo">-</div>
-      <div class="sub" id="kpi-seo-sub"></div>
-    </div>
+  <!-- RECAP ANNUEL -->
+  <div class="annuel-section">
+    <h2>📅 Atteinte globale 2025 — Cumul annuel</h2>
+    <div class="annuel-grid" id="recap-annuel"></div>
   </div>
 
-  <!-- Tables -->
+  <!-- KPI CARDS -->
+  <div class="kpi-grid" id="kpi-grid"></div>
+
+  <!-- VARIABLE BANNER TRIMESTRE EN COURS -->
+  <div class="variable-banner" id="variable-banner"></div>
+
+  <!-- TABLE CA DIGITAL -->
   <div class="section">
-    <h2>💰 Budget Digital</h2>
+    <h2>💰 CA Digital</h2>
     <table>
-      <thead><tr><th>Quarter</th><th>Réalisé</th><th>Objectif</th><th>Atteinte</th><th>Progression</th></tr></thead>
+      <thead><tr><th>Période</th><th>Réalisé</th><th>Objectif</th><th>Progression</th></tr></thead>
       <tbody id="table-digital"></tbody>
     </table>
   </div>
 
+  <!-- TABLE INBOUND -->
   <div class="section">
-    <h2>📥 Inbound</h2>
+    <h2>📬 Leads Inbound</h2>
     <table>
-      <thead><tr><th>Quarter</th><th>Réalisé</th><th>Objectif</th><th>Atteinte</th><th>Progression</th></tr></thead>
+      <thead><tr><th>Période</th><th>Réalisé</th><th>Objectif</th><th>Progression</th></tr></thead>
       <tbody id="table-inbound"></tbody>
     </table>
   </div>
 
+  <!-- TABLE LEADS SEO -->
   <div class="section">
     <h2>🔍 Leads SEO</h2>
     <table>
-      <thead><tr><th>Quarter</th><th>Réalisé</th><th>Objectif</th><th>Atteinte</th><th>Progression</th></tr></thead>
+      <thead><tr><th>Période</th><th>Réalisé</th><th>Objectif</th><th>Progression</th></tr></thead>
       <tbody id="table-seo"></tbody>
     </table>
   </div>
 
-  <!-- Recap Variable par Quarter -->
+  <!-- RECAP VARIABLE PAR QUARTER -->
   <div class="section">
-    <h2>🎯 Récap Variable par Quarter</h2>
-    <p style="color:#94a3b8; font-size:0.8rem; margin-bottom:12px;">La variable est déclenchée si les 3 KPI atteignent leur objectif sur le quarter</p>
+    <h2>🎯 Statut variable par trimestre</h2>
     <div class="recap-grid" id="recap-grid"></div>
   </div>
 </div>
 
 <script>
-const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTBJmcK5aCY8lIGqOLnvgcKjO1I8uZMI90XkUagFMUXqXXoD4QKMwPnyZNifpMseYiAfn6fIlxo0hTk/pub?output=csv";
+const CSV_URL = "https://docs.google.com/spreadsheets/d/1rEsypnJMCnIHp-JMiRLcNVfVkAOeGJ7nblWYv5fnjcw/gviz/tq?tqx=out:csv&sheet=data";
 
-function fmt(n) {
-  if (n >= 1000) return n.toLocaleString('fr-FR');
-  return n;
-}
+const quarters = ['q1','q2','q3','q4'];
+const qLabels  = {q1:'Q1',q2:'Q2',q3:'Q3',q4:'Q4'};
+const qClass   = {q1:'q1',q2:'q2',q3:'q3',q4:'q4'};
 
 function pct(real, obj) {
-  if (!obj || obj == 0) return 0;
+  if (!obj || obj === 0) return 0;
   return Math.round((real / obj) * 100);
 }
 
-function colorClass(p) {
-  if (p >= 100) return 'green';
-  if (p >= 75) return 'yellow';
-  return 'red';
+function pctColor(p) {
+  if (p >= 100) return '#4ade80';
+  if (p >= 60)  return '#fbbf24';
+  return '#f87171';
 }
 
-function fillClass(p) {
-  if (p >= 100) return 'fill-green';
-  if (p >= 75) return 'fill-yellow';
-  return 'fill-red';
+function barColor(p) {
+  if (p >= 100) return '#4ade80';
+  if (p >= 60)  return '#fbbf24';
+  return '#f87171';
 }
 
-function buildRow(q, real, obj) {
-  const p = pct(real, obj);
+function fmtEuro(v) {
+  if (v === 0) return '—';
+  return v.toLocaleString('fr-FR') + ' €';
+}
+
+function fmtNum(v) {
+  if (v === 0) return '—';
+  return v.toLocaleString('fr-FR');
+}
+
+function makeBar(p, color) {
   const w = Math.min(p, 100);
-  const cc = colorClass(p);
-  const fc = fillClass(p);
-  return `<tr>
-    <td><span class="quarter-badge">${q}</span></td>
-    <td>${fmt(real)}</td>
-    <td>${fmt(obj)}</td>
-    <td class="${cc}" style="font-weight:600">${p}%</td>
-    <td style="width:180px">
-      <div class="progress-bar"><div class="progress-fill ${fc}" style="width:${w}%"></div></div>
-    </td>
-  </tr>`;
+  return `<span class="bar-bg"><span class="bar-fg" style="width:${w}%;background:${color}"></span></span><span class="pct-label" style="color:${color}">${p}%</span>`;
 }
 
 async function loadData() {
   try {
     const resp = await fetch(CSV_URL);
     const text = await resp.text();
-    const lines = text.trim().split('\n').map(l => l.split(','));
+    const lines = text.trim().split("\\n").slice(1);
 
     const data = {};
-    lines.forEach(cols => {
-      const key = cols[0].trim();
+    lines.forEach(line => {
+      const cols = line.split(",").map(c => c.replace(/"/g,"").trim());
+      const key  = cols[0];
       const real = parseFloat(cols[1]) || 0;
-      const obj = parseFloat(cols[2]) || 0;
-      // col[3] = quarter target (optionnel)
-      data[key] = { real, obj };
+      const obj  = parseFloat(cols[2]) || 0;
+      data[key]  = { real, obj };
     });
 
-    // Build tables
-    const quarters = ['q1','q2','q3','q4'];
-    let digitalRows = '', inboundRows = '', seoRows = '';
+    // ---- RECAP ANNUEL ----
+    const totalDigReal = quarters.reduce((s,q) => s + (data[`${q}_digital`]?.real  || 0), 0);
+    const totalDigObj  = quarters.reduce((s,q) => s + (data[`${q}_digital`]?.obj   || 0), 0);
+    const totalInbReal = quarters.reduce((s,q) => s + (data[`${q}_inbound`]?.real  || 0), 0);
+    const totalInbObj  = quarters.reduce((s,q) => s + (data[`${q}_inbound`]?.obj   || 0), 0);
+    const totalSeoReal = quarters.reduce((s,q) => s + (data[`${q}_leads_seo`]?.real || 0), 0);
+    const totalSeoObj  = quarters.reduce((s,q) => s + (data[`${q}_leads_seo`]?.obj  || 0), 0);
 
-    quarters.forEach(q => {
-      const d = data[`${q}_digital`] || {real:0, obj:0};
-      const i = data[`${q}_inbound`] || {real:0, obj:0};
-      const s = data[`${q}_leads_seo`] || {real:0, obj:0};
-      digitalRows += buildRow(q.toUpperCase(), d.real, d.obj);
-      inboundRows += buildRow(q.toUpperCase(), i.real, i.obj);
-      seoRows += buildRow(q.toUpperCase(), s.real, s.obj);
-    });
+    const pAD = pct(totalDigReal, totalDigObj);
+    const pAI = pct(totalInbReal, totalInbObj);
+    const pAS = pct(totalSeoReal, totalSeoObj);
 
-    document.getElementById('table-digital').innerHTML = digitalRows;
-    document.getElementById('table-inbound').innerHTML = inboundRows;
-    document.getElementById('table-seo').innerHTML = seoRows;
+    document.getElementById('recap-annuel').innerHTML = `
+      <div class="annuel-card">
+        <div class="alabel">CA Digital 2025</div>
+        <div class="avalue" style="color:${pctColor(pAD)}">${pAD}%</div>
+        <div class="asub">${fmtEuro(totalDigReal)} / ${fmtEuro(totalDigObj)}</div>
+        <div class="abar-bg"><div class="abar-fg" style="width:${Math.min(pAD,100)}%;background:${barColor(pAD)}"></div></div>
+      </div>
+      <div class="annuel-card">
+        <div class="alabel">Inbound 2025</div>
+        <div class="avalue" style="color:${pctColor(pAI)}">${pAI}%</div>
+        <div class="asub">${fmtNum(totalInbReal)} / ${fmtNum(totalInbObj)} leads</div>
+        <div class="abar-bg"><div class="abar-fg" style="width:${Math.min(pAI,100)}%;background:${barColor(pAI)}"></div></div>
+      </div>
+      <div class="annuel-card">
+        <div class="alabel">Leads SEO 2025</div>
+        <div class="avalue" style="color:${pctColor(pAS)}">${pAS}%</div>
+        <div class="asub">${totalSeoReal} / ${totalSeoObj} leads</div>
+        <div class="abar-bg"><div class="abar-fg" style="width:${Math.min(pAS,100)}%;background:${barColor(pAS)}"></div></div>
+      </div>`;
 
-    // KPI Cards — cumul all quarters
-    const totalDigitalReal = quarters.reduce((a,q) => a + (data[`${q}_digital`]?.real||0), 0);
-    const totalDigitalObj = quarters.reduce((a,q) => a + (data[`${q}_digital`]?.obj||0), 0);
-    const totalInboundReal = quarters.reduce((a,q) => a + (data[`${q}_inbound`]?.real||0), 0);
-    const totalInboundObj = quarters.reduce((a,q) => a + (data[`${q}_inbound`]?.obj||0), 0);
-    const totalSeoReal = quarters.reduce((a,q) => a + (data[`${q}_leads_seo`]?.real||0), 0);
-    const totalSeoObj = quarters.reduce((a,q) => a + (data[`${q}_leads_seo`]?.obj||0), 0);
-
-    const pD = pct(totalDigitalReal, totalDigitalObj);
-    const pI = pct(totalInboundReal, totalInboundObj);
-    const pS = pct(totalSeoReal, totalSeoObj);
-    const pGlobal = Math.round((pD + pI + pS) / 3);
-
-    document.getElementById('kpi-global').textContent = pGlobal + '%';
-    document.getElementById('kpi-digital').className = 'value ' + colorClass(pD);
-    document.getElementById('kpi-digital').textContent = pD + '%';
-    document.getElementById('kpi-digital-sub').textContent = fmt(totalDigitalReal) + ' / ' + fmt(totalDigitalObj);
-    document.getElementById('kpi-inbound').className = 'value ' + colorClass(pI);
-    document.getElementById('kpi-inbound').textContent = pI + '%';
-    document.getElementById('kpi-inbound-sub').textContent = fmt(totalInboundReal) + ' / ' + fmt(totalInboundObj);
-    document.getElementById('kpi-seo').className = 'value ' + colorClass(pS);
-    document.getElementById('kpi-seo').textContent = pS + '%';
-    document.getElementById('kpi-seo-sub').textContent = fmt(totalSeoReal) + ' / ' + fmt(totalSeoObj);
-
-    // Recap variable par quarter
-    // Détermine le quarter en cours (premier quarter où obj > 0 et real < obj, ou dernier avec data)
-    const now = new Date();
-    const month = now.getMonth() + 1;
+    // ---- KPI CARDS ----
+    const month = new Date().getMonth() + 1;
     const currentQ = month <= 3 ? 'q1' : month <= 6 ? 'q2' : month <= 9 ? 'q3' : 'q4';
+    const dC = data[`${currentQ}_digital`]    || {real:0, obj:0};
+    const iC = data[`${currentQ}_inbound`]    || {real:0, obj:0};
+    const sC = data[`${currentQ}_leads_seo`]  || {real:0, obj:0};
 
+    document.getElementById('kpi-grid').innerHTML = `
+      <div class="kpi-card blue">
+        <div class="label">CA Digital ${currentQ.toUpperCase()}</div>
+        <div class="value">${dC.real.toLocaleString('fr-FR')} €</div>
+        <div class="sub">Objectif : ${fmtEuro(dC.obj)}</div>
+      </div>
+      <div class="kpi-card green">
+        <div class="label">Inbound ${currentQ.toUpperCase()}</div>
+        <div class="value">${fmtNum(iC.real)}</div>
+        <div class="sub">Objectif : ${fmtNum(iC.obj)} leads</div>
+      </div>
+      <div class="kpi-card yellow">
+        <div class="label">Leads SEO ${currentQ.toUpperCase()}</div>
+        <div class="value">${sC.real}</div>
+        <div class="sub">Objectif : ${sC.obj} leads</div>
+      </div>
+      <div class="kpi-card purple">
+        <div class="label">Total Leads SEO 2025</div>
+        <div class="value">${totalSeoReal}</div>
+        <div class="sub">Objectif annuel : ${totalSeoObj} leads</div>
+      </div>`;
+
+    // ---- VARIABLE BANNER ----
+    const variableOn = pct(dC.real,dC.obj)>=100 && pct(iC.real,iC.obj)>=100 && pct(sC.real,sC.obj)>=100;
+    const banner = document.getElementById('variable-banner');
+    banner.className = 'variable-banner ' + (variableOn ? 'variable-on' : 'variable-off');
+    banner.textContent = variableOn
+      ? `✅ Variable déclenchée pour ${currentQ.toUpperCase()} — Tous les objectifs sont atteints !`
+      : `❌ Variable non déclenchée pour ${currentQ.toUpperCase()} — Objectifs en cours d\\'atteinte`;
+
+    // ---- TABLES ----
+    function buildRows(metricKey, fmtFn) {
+      return quarters.map(q => {
+        const d = data[`${q}_${metricKey}`] || {real:0, obj:0};
+        const p = pct(d.real, d.obj);
+        const isAvenir = d.real === 0 && d.obj > 0;
+        return `<tr>
+          <td><span class="q-badge ${qClass[q]}">${qLabels[q]}</span>${isAvenir ? '<span class="avenir">À venir</span>' : ''}</td>
+          <td>${isAvenir ? '—' : fmtFn(d.real)}</td>
+          <td>${fmtFn(d.obj)}</td>
+          <td>${isAvenir ? '—' : makeBar(p, barColor(p))}</td>
+        </tr>`;
+      }).join('');
+    }
+
+    document.getElementById('table-digital').innerHTML = buildRows('digital',  fmtEuro);
+    document.getElementById('table-inbound').innerHTML = buildRows('inbound',  fmtNum);
+    document.getElementById('table-seo').innerHTML     = buildRows('leads_seo', v => v === 0 ? '—' : String(v));
+
+    // ---- RECAP VARIABLE PAR QUARTER ----
     let recapHTML = '';
     quarters.forEach(q => {
-      const d = data[`${q}_digital`] || {real:0, obj:0};
-      const i = data[`${q}_inbound`] || {real:0, obj:0};
+      const d = data[`${q}_digital`]   || {real:0, obj:0};
+      const i = data[`${q}_inbound`]   || {real:0, obj:0};
       const s = data[`${q}_leads_seo`] || {real:0, obj:0};
-      const pDq = pct(d.real, d.obj);
-      const pIq = pct(i.real, i.obj);
-      const pSq = pct(s.real, s.obj);
-      const triggered = pDq >= 100 && pIq >= 100 && pSq >= 100;
+      const pD = pct(d.real, d.obj);
+      const pI = pct(i.real, i.obj);
+      const pS = pct(s.real, s.obj);
+      const ok = pD >= 100 && pI >= 100 && pS >= 100;
       const isCurrent = q === currentQ;
-      const border = isCurrent ? 'border: 2px solid #60a5fa;' : '';
-      const label = triggered ? '✅ Déclenchée' : '❌ Non déclenchée';
-      const cls = triggered ? 'green' : 'red';
-      recapHTML += `<div class="recap-card" style="${border}">
-        <div class="q-label">${q.toUpperCase()}${isCurrent ? ' 🔵' : ''}</div>
-        <div class="q-status ${cls}">${label}</div>
-        <div style="font-size:0.7rem; color:#64748b; margin-top:6px">Digital ${pDq}% · Inbound ${pIq}% · SEO ${pSq}%</div>
+      recapHTML += `<div class="recap-card" style="${isCurrent ? 'border:2px solid #60a5fa;' : ''}">
+        <div class="ql">${qLabels[q]}${isCurrent ? ' 🔵 En cours' : ''}</div>
+        <div class="qs" style="color:${ok ? '#4ade80' : '#f87171'}">${ok ? '✅ Déclenchée' : '❌ Non déclenchée'}</div>
+        <div class="qd">
+          CA Digital : ${pD}%<br>
+          Inbound : ${pI}%<br>
+          Leads SEO : ${pS}%
+        </div>
       </div>`;
     });
     document.getElementById('recap-grid').innerHTML = recapHTML;
 
-    // Variable banner — quarter en cours
-    const dC = data[`${currentQ}_digital`] || {real:0, obj:0};
-    const iC = data[`${currentQ}_inbound`] || {real:0, obj:0};
-    const sC = data[`${currentQ}_leads_seo`] || {real:0, obj:0};
-    const pDC = pct(dC.real, dC.obj);
-    const pIC = pct(iC.real, iC.obj);
-    const pSC = pct(sC.real, sC.obj);
-    const variableOn = pDC >= 100 && pIC >= 100 && pSC >= 100;
-    const banner = document.getElementById('variable-banner');
-    if (variableOn) {
-      banner.className = 'variable-banner variable-on';
-      banner.textContent = '✅ Variable déclenchée pour ' + currentQ.toUpperCase() + ' — Tous les objectifs sont atteints !';
-    } else {
-      banner.className = 'variable-banner variable-off';
-      banner.textContent = '❌ Variable non déclenchée pour ' + currentQ.toUpperCase() + ' — Objectifs en cours d\'atteinte';
-    }
-
-    document.getElementById('last-update').textContent = 'Dernière mise à jour : ' + new Date().toLocaleString('fr-FR');
+    document.getElementById('last-update').textContent = '🕐 Dernière mise à jour : ' + new Date().toLocaleString('fr-FR');
     document.getElementById('loading').style.display = 'none';
     document.getElementById('content').style.display = 'block';
 
@@ -270,4 +300,7 @@ async function loadData() {
 loadData();
 </script>
 </body>
-</html>
+</html>'''
+
+with open("dashboard_marketing_2025.html", "w", encoding="utf-8") as f:
+    f.write(html_content)
