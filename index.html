@@ -3,471 +3,334 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dashboard Marketing 2025</title>
+<title>Dashboard Performance</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
-
   * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  body {
-    background: #0d1117;
-    color: #e6edf3;
-    font-family: 'Inter', sans-serif;
-    padding: 32px;
-    min-height: 100vh;
-  }
-
-  /* HEADER */
-  .header { margin-bottom: 32px; }
-  .header h1 { font-size: 1.75rem; font-weight: 700; letter-spacing: -0.02em; }
-  .header .sub { color: #7d8590; font-size: 0.85rem; margin-top: 4px; }
-  .header .update { font-size: 0.78rem; color: #7d8590; margin-top: 6px; display: flex; align-items: center; gap: 6px; }
-  .dot-live { width: 7px; height: 7px; border-radius: 50%; background: #3fb950; display: inline-block; }
-
-  /* SECTION LABEL */
-  .section-label {
-    font-size: 0.7rem;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    color: #7d8590;
-    text-transform: uppercase;
-    margin-bottom: 12px;
-    margin-top: 28px;
-  }
-
-  /* ANNUAL KPIs */
-  .annual-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1px;
-    background: #21262d;
-    border-radius: 10px;
-    overflow: hidden;
-  }
-  .annual-card {
-    background: #161b22;
-    padding: 24px;
-    text-align: center;
-  }
-  .annual-card .label {
-    font-size: 0.7rem;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: #7d8590;
-    margin-bottom: 12px;
-  }
-  .annual-card .pct {
-    font-size: 2.4rem;
-    font-weight: 800;
-    letter-spacing: -0.03em;
-    line-height: 1;
-  }
-  .annual-card .nums {
-    font-size: 0.78rem;
-    color: #7d8590;
-    margin-top: 8px;
-  }
-  .bar-track {
-    background: #21262d;
-    border-radius: 3px;
-    height: 4px;
-    margin-top: 12px;
-    overflow: hidden;
-  }
-  .bar-fill { height: 4px; border-radius: 3px; transition: width 0.8s ease; }
-
-  /* QUARTERLY KPIs */
-  .q-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 12px;
-  }
-  .q-card {
-    background: #161b22;
-    border: 1px solid #21262d;
-    border-radius: 10px;
-    padding: 18px;
-  }
-  .q-card .q-label {
-    font-size: 0.68rem;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: #7d8590;
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-  .q-badge {
-    font-size: 0.65rem;
-    font-weight: 700;
-    padding: 1px 6px;
-    border-radius: 4px;
-  }
-  .q-card .q-val {
-    font-size: 1.5rem;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-  }
-  .q-card .q-obj {
-    font-size: 0.75rem;
-    color: #7d8590;
-    margin-top: 4px;
-  }
-  .q-card .q-prog {
-    font-size: 0.72rem;
-    font-weight: 600;
-    margin-top: 2px;
-  }
-
-  /* TABLES */
-  .tables-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-  }
-  .table-card {
-    background: #161b22;
-    border: 1px solid #21262d;
-    border-radius: 10px;
-    overflow: hidden;
-  }
-  .table-card .table-header {
-    padding: 16px 20px;
-    border-bottom: 1px solid #21262d;
-    font-size: 0.82rem;
-    font-weight: 600;
-  }
-  table { width: 100%; border-collapse: collapse; }
-  thead th {
-    padding: 8px 20px;
-    font-size: 0.65rem;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: #7d8590;
-    text-align: left;
-    background: #0d1117;
-  }
-  tbody tr { border-top: 1px solid #21262d; }
-  tbody tr:hover { background: #1c2128; }
-  tbody td { padding: 10px 20px; font-size: 0.82rem; }
-  .td-prog { min-width: 80px; }
-  .mini-bar-track { background: #21262d; border-radius: 2px; height: 4px; width: 80px; overflow: hidden; }
-  .mini-bar-fill { height: 4px; border-radius: 2px; }
-  .pct-text { font-size: 0.7rem; font-weight: 600; margin-top: 2px; }
-
-  /* VARIABLE RECAP */
-  .variable-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 12px;
-  }
-  .variable-card {
-    background: #161b22;
-    border-radius: 10px;
-    padding: 20px;
-    text-align: center;
-    border: 1px solid #21262d;
-  }
-  .variable-card .v-q {
-    font-size: 0.7rem;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: #7d8590;
-    margin-bottom: 10px;
-  }
-  .variable-card .v-status {
-    font-size: 1rem;
-    font-weight: 700;
-    margin-bottom: 8px;
-  }
-  .variable-card .v-detail {
-    font-size: 0.7rem;
-    color: #7d8590;
-    line-height: 1.6;
-  }
-  .v-pill {
-    display: inline-block;
-    font-size: 0.65rem;
-    font-weight: 700;
-    padding: 2px 8px;
-    border-radius: 20px;
-    margin: 2px 1px;
-  }
-
-  /* COULEURS */
-  .c-blue { color: #58a6ff; }
-  .c-green { color: #3fb950; }
-  .c-yellow { color: #d29922; }
-  .c-orange { color: #f0883e; }
-  .c-purple { color: #bc8cff; }
-  .c-red { color: #f85149; }
-  .c-teal { color: #39d353; }
-
-  .bg-green { background: rgba(63,185,80,0.15); color: #3fb950; }
-  .bg-yellow { background: rgba(210,153,34,0.15); color: #d29922; }
-  .bg-red { background: rgba(248,81,73,0.15); color: #f85149; }
-  .bg-blue { background: rgba(88,166,255,0.15); color: #58a6ff; }
-  .bg-purple { background: rgba(188,140,255,0.15); color: #bc8cff; }
-  .bg-orange { background: rgba(240,136,62,0.15); color: #f0883e; }
-
+  body { background: #0d1117; color: #e6edf3; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; padding: 24px; min-height: 100vh; }
+  
+  h1 { font-size: 20px; font-weight: 600; color: #f0f6fc; margin-bottom: 4px; }
+  .subtitle { font-size: 13px; color: #7d8590; margin-bottom: 24px; }
+  
+  .grid-top { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+  
+  .card { background: #161b22; border: 1px solid #30363d; border-radius: 10px; padding: 20px; }
+  .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
+  .card-title { font-size: 12px; color: #7d8590; text-transform: uppercase; letter-spacing: 0.5px; }
+  .card-badge { font-size: 11px; padding: 2px 8px; border-radius: 20px; font-weight: 500; }
+  .badge-green { background: #1a3a2a; color: #3fb950; }
+  .badge-red { background: #3a1a1a; color: #f85149; }
+  .badge-gray { background: #21262d; color: #7d8590; }
+  .badge-orange { background: #3a2a1a; color: #d29922; }
+  
+  .card-value { font-size: 28px; font-weight: 700; color: #f0f6fc; margin-bottom: 4px; }
+  .card-sub { font-size: 12px; color: #7d8590; }
+  
+  .progress-bar { background: #21262d; border-radius: 4px; height: 6px; margin-top: 12px; overflow: hidden; }
+  .progress-fill { height: 100%; border-radius: 4px; transition: width 0.6s ease; }
   .fill-green { background: #3fb950; }
-  .fill-yellow { background: #d29922; }
-  .fill-orange { background: #f0883e; }
   .fill-red { background: #f85149; }
-  .fill-blue { background: #58a6ff; }
+  .fill-orange { background: #d29922; }
+  
+  /* Table */
+  .table-section { background: #161b22; border: 1px solid #30363d; border-radius: 10px; overflow: hidden; margin-bottom: 24px; }
+  .table-header { padding: 16px 20px; border-bottom: 1px solid #30363d; display: flex; justify-content: space-between; align-items: center; }
+  .table-header h2 { font-size: 15px; font-weight: 600; }
+  .last-update { font-size: 12px; color: #7d8590; }
+  
+  table { width: 100%; border-collapse: collapse; }
+  th { background: #0d1117; padding: 10px 20px; text-align: left; font-size: 11px; color: #7d8590; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid #30363d; }
+  td { padding: 14px 20px; font-size: 13px; border-bottom: 1px solid #21262d; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #1c2128; }
+  
+  .quarter-label { font-weight: 600; color: #f0f6fc; }
+  .status-pill { display: inline-flex; align-items: center; gap: 5px; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 500; }
+  .pill-done { background: #1a3a2a; color: #3fb950; }
+  .pill-progress { background: #1a2a3a; color: #58a6ff; }
+  .pill-upcoming { background: #21262d; color: #7d8590; }
+  .pill-fail { background: #3a1a1a; color: #f85149; }
+  
+  .check { color: #3fb950; }
+  .cross { color: #f85149; }
+  .dash { color: #7d8590; }
+  
+  /* Prime cards */
+  .prime-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+  .prime-card { background: #161b22; border: 1px solid #30363d; border-radius: 10px; padding: 20px; }
+  .prime-card.triggered { border-color: #3fb950; background: #0d1f15; }
+  .prime-card.partial { border-color: #d29922; background: #1a150a; }
+  .prime-card.failed { border-color: #f85149; background: #1a0d0d; }
+  .prime-card.upcoming { border-color: #30363d; }
+  
+  .prime-quarter { font-size: 12px; color: #7d8590; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+  .prime-amount { font-size: 32px; font-weight: 700; margin-bottom: 4px; }
+  .prime-amount.green { color: #3fb950; }
+  .prime-amount.orange { color: #d29922; }
+  .prime-amount.red { color: #f85149; }
+  .prime-amount.gray { color: #7d8590; }
+  .prime-score { font-size: 12px; color: #7d8590; margin-bottom: 12px; }
+  
+  .prime-breakdown { display: flex; flex-direction: column; gap: 4px; margin-top: 10px; border-top: 1px solid #30363d; padding-top: 10px; }
+  .breakdown-row { display: flex; justify-content: space-between; font-size: 11px; color: #7d8590; }
+  .breakdown-row span:last-child { color: #e6edf3; font-weight: 500; }
 
-  .divider { height: 1px; background: #21262d; margin: 32px 0; }
+  .section-title { font-size: 13px; color: #7d8590; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; }
 </style>
 </head>
 <body>
 
-<div class="header">
-  <h1>📊 Dashboard Marketing 2025</h1>
-  <div class="sub">CA Digital · Leads Inbound · Leads SEO</div>
-  <div class="update">
-    <span class="dot-live"></span>
-    <span id="last-update">Chargement...</span>
+<h1>📊 Dashboard Performance Digital</h1>
+<p class="subtitle">Mise à jour automatique toutes les 5 minutes · <span id="last-update">Chargement...</span></p>
+
+<!-- KPI Cards -->
+<div class="grid-top">
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">CA Digital YTD</span>
+      <span class="card-badge badge-gray" id="badge-ca">—</span>
+    </div>
+    <div class="card-value" id="val-ca-ytd">—</div>
+    <div class="card-sub" id="sub-ca">sur <span id="obj-ca-ytd">—</span> objectif</div>
+    <div class="progress-bar"><div class="progress-fill fill-green" id="prog-ca" style="width:0%"></div></div>
+  </div>
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">CA Inbound YTD</span>
+      <span class="card-badge badge-gray" id="badge-inbound">—</span>
+    </div>
+    <div class="card-value" id="val-inbound-ytd">—</div>
+    <div class="card-sub">sur <span id="obj-inbound-ytd">—</span> objectif</div>
+    <div class="progress-bar"><div class="progress-fill fill-green" id="prog-inbound" style="width:0%"></div></div>
+  </div>
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">Leads SEO YTD</span>
+      <span class="card-badge badge-gray" id="badge-leads">—</span>
+    </div>
+    <div class="card-value" id="val-leads-ytd">—</div>
+    <div class="card-sub">sur <span id="obj-leads-ytd">—</span> objectif</div>
+    <div class="progress-bar"><div class="progress-fill fill-green" id="prog-leads" style="width:0%"></div></div>
+  </div>
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">Prime YTD</span>
+      <span class="card-badge badge-gray" id="badge-prime">—</span>
+    </div>
+    <div class="card-value" id="val-prime-ytd">—</div>
+    <div class="card-sub" id="sub-prime">sur 3 400 € annuel</div>
+    <div class="progress-bar"><div class="progress-fill fill-green" id="prog-prime" style="width:0%"></div></div>
   </div>
 </div>
 
-<!-- ANNUAL -->
-<div class="section-label">Atteinte annuelle 2025 — Cumul</div>
-<div class="annual-grid">
-  <div class="annual-card">
-    <div class="label">CA Digital 2025</div>
-    <div class="pct" id="ann-digital-pct">—</div>
-    <div class="nums" id="ann-digital-nums">—</div>
-    <div class="bar-track"><div class="bar-fill" id="ann-digital-bar" style="width:0%"></div></div>
+<!-- Table -->
+<div class="table-section">
+  <div class="table-header">
+    <h2>Suivi trimestriel</h2>
+    <span class="last-update" id="last-update2">—</span>
   </div>
-  <div class="annual-card">
-    <div class="label">Leads Inbound 2025</div>
-    <div class="pct" id="ann-inbound-pct">—</div>
-    <div class="nums" id="ann-inbound-nums">—</div>
-    <div class="bar-track"><div class="bar-fill" id="ann-inbound-bar" style="width:0%"></div></div>
-  </div>
-  <div class="annual-card">
-    <div class="label">Leads SEO 2025</div>
-    <div class="pct" id="ann-seo-pct">—</div>
-    <div class="nums" id="ann-seo-nums">—</div>
-    <div class="bar-track"><div class="bar-fill" id="ann-seo-bar" style="width:0%"></div></div>
-  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>Quarter</th>
+        <th>Statut</th>
+        <th>CA Digital</th>
+        <th>CA Inbound</th>
+        <th>Leads SEO</th>
+        <th>Score pondéré</th>
+      </tr>
+    </thead>
+    <tbody id="table-body">
+      <tr><td colspan="6" style="text-align:center;color:#7d8590;padding:32px">Chargement...</td></tr>
+    </tbody>
+  </table>
 </div>
 
-<!-- QUARTERLY CARDS -->
-<div class="section-label" style="margin-top:28px">Détail par trimestre — KPIs actuels</div>
-
-<div class="section-label" style="margin-top:0; color:#58a6ff; text-transform:none; font-size:0.75rem; margin-bottom:8px">💰 CA Digital</div>
-<div class="q-grid" id="q-digital-grid"></div>
-
-<div class="section-label" style="margin-top:20px; color:#3fb950; text-transform:none; font-size:0.75rem; margin-bottom:8px">📥 Leads Inbound</div>
-<div class="q-grid" id="q-inbound-grid"></div>
-
-<div class="section-label" style="margin-top:20px; color:#bc8cff; text-transform:none; font-size:0.75rem; margin-bottom:8px">🔍 Leads SEO</div>
-<div class="q-grid" id="q-seo-grid"></div>
-
-<div class="divider"></div>
-
-<!-- TABLES -->
-<div class="section-label" style="margin-top:0">Tableau de suivi détaillé</div>
-<div class="tables-grid">
-  <div class="table-card">
-    <div class="table-header c-blue">💰 CA Digital</div>
-    <table>
-      <thead><tr><th>Période</th><th>Réalisé</th><th>Objectif</th><th>Progression</th></tr></thead>
-      <tbody id="table-digital"></tbody>
-    </table>
-  </div>
-  <div class="table-card">
-    <div class="table-header c-green">📥 Leads Inbound</div>
-    <table>
-      <thead><tr><th>Période</th><th>Réalisé</th><th>Objectif</th><th>Progression</th></tr></thead>
-      <tbody id="table-inbound"></tbody>
-    </table>
-  </div>
-  <div class="table-card">
-    <div class="table-header c-purple">🔍 Leads SEO</div>
-    <table>
-      <thead><tr><th>Période</th><th>Réalisé</th><th>Objectif</th><th>Progression</th></tr></thead>
-      <tbody id="table-seo"></tbody>
-    </table>
-  </div>
+<!-- Prime Cards -->
+<p class="section-title">Prime individuelle · 850 € / quarter</p>
+<div class="prime-grid" id="prime-grid">
+  <!-- dynamique -->
 </div>
-
-<div class="divider"></div>
-
-<!-- VARIABLE RECAP -->
-<div class="section-label" style="margin-top:0">Déclenchement variable par trimestre</div>
-<div class="variable-grid" id="variable-grid"></div>
 
 <script>
-const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTBJmcK5aCY8lIGqOLnvgcKjO1I8uZMI90XkUagFMUXqXXoD4QKMwPnyZNifpMseYiAfn6fIlxo0hTk/pub?output=csv';
+const SHEET_ID = '1VlCRY4OuDzO28TJ4GEEGDBxTj2IQTLuT4HbAiyqe4Ac';
+const SHEET_NAME = 'Feuille1';
+const CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(SHEET_NAME)}`;
 
-function colorClass(pct) {
-  if (pct >= 100) return 'c-green';
-  if (pct >= 75) return 'c-yellow';
-  if (pct >= 40) return 'c-orange';
-  return 'c-red';
-}
-function fillClass(pct) {
-  if (pct >= 100) return 'fill-green';
-  if (pct >= 75) return 'fill-yellow';
-  if (pct >= 40) return 'fill-orange';
-  return 'fill-red';
-}
-function bgClass(pct) {
-  if (pct >= 100) return 'bg-green';
-  if (pct >= 75) return 'bg-yellow';
-  if (pct >= 40) return 'bg-orange';
-  return 'bg-red';
-}
-function fmt(n, type) {
-  if (type === 'eur') return Number(n).toLocaleString('fr-FR') + ' €';
-  return Number(n).toLocaleString('fr-FR');
-}
+const PRIME_MAX = 850;
+const PRIME_THRESHOLD = 0.70;
 
-const qColors = ['c-blue','c-green','c-orange','c-purple'];
-const qBg = ['bg-blue','bg-green','bg-orange','bg-purple'];
+const QUARTERS = [
+  {
+    key: 'q1', label: 'Q1',
+    obj_digital: 25000, obj_inbound: 58250, obj_leads: 100,
+    rows: ['q1_digital','q1_inbound','q1_leads_seo']
+  },
+  {
+    key: 'q2', label: 'Q2',
+    obj_digital: 25000, obj_inbound: 71500, obj_leads: 93,
+    rows: ['q2_digital','q2_inbound','q2_leads_seo']
+  },
+  {
+    key: 'q3', label: 'Q3',
+    obj_digital: 25000, obj_inbound: 53000, obj_leads: 69,
+    rows: ['q3_digital','q3_inbound','q3_leads_seo']
+  },
+  {
+    key: 'q4', label: 'Q4',
+    obj_digital: 25000, obj_inbound: 67000, obj_leads: 88,
+    rows: ['q4_digital','q4_inbound','q4_leads_seo']
+  }
+];
+
+function fmt(n) {
+  if (n >= 1000) return (n/1000).toFixed(0) + 'k€';
+  return n.toFixed(0) + '€';
+}
+function pct(val, obj) {
+  return Math.min(val / obj, 1);
+}
+function scoreWeighted(pDigital, pInbound, pLeads) {
+  return (Math.min(pDigital,1) * 0.70) + (Math.min(pInbound,1) * 0.15) + (Math.min(pLeads,1) * 0.15);
+}
+function calcPrime(score) {
+  if (score < PRIME_THRESHOLD) return 0;
+  return Math.round((score / 1) * PRIME_MAX);
+}
+function getStatus(digital, inbound, leads, q) {
+  const hasData = digital > 0 || inbound > 0 || leads > 0;
+  if (!hasData) return 'upcoming';
+  const score = scoreWeighted(pct(digital, q.obj_digital), pct(inbound, q.obj_inbound), pct(leads, q.obj_leads));
+  // Détecter si quarter terminé : toutes les 3 métriques ont des données
+  const complete = digital > 0 && inbound > 0 && leads > 0;
+  if (!complete) return 'progress';
+  if (score >= PRIME_THRESHOLD) return 'done';
+  return 'fail';
+}
 
 async function loadData() {
   try {
     const res = await fetch(CSV_URL + '&t=' + Date.now());
     const text = await res.text();
-    const rows = text.trim().split('\n');
-
-    const data = {};
-    rows.forEach(row => {
-      // Support virgule et point-virgule
-      const cols = row.split(/[,;]/);
-      if (cols.length >= 3) {
-        const key = cols[0].trim().replace(/"/g, '');
-        const realise = parseFloat(cols[1].toString().replace(/[^0-9.-]/g,'')) || 0;
-        const objectif = parseFloat(cols[2].toString().replace(/[^0-9.-]/g,'')) || 0;
-        data[key] = { realise, objectif };
-      }
+    const rows = text.trim().split('\n').map(r => {
+      const cols = r.split(/[,;]/);
+      return { key: cols[0].replace(/"/g,'').trim(), val: parseFloat(cols[1].replace(/"/g,'').replace(',','.')) || 0 };
     });
 
-    console.log('DATA:', data); // debug
+    console.log('DATA:', rows);
+
+    // Map
+    const data = {};
+    rows.forEach(r => { data[r.key] = r.val; });
 
     const now = new Date();
-    document.getElementById('last-update').textContent =
-      'Dernière mise à jour : ' + now.toLocaleDateString('fr-FR') + ' ' + now.toLocaleTimeString('fr-FR', {hour:'2-digit',minute:'2-digit'});
+    document.getElementById('last-update').textContent = 'Mis à jour · ' + now.toLocaleTimeString('fr-FR');
+    document.getElementById('last-update2').textContent = 'Mis à jour · ' + now.toLocaleTimeString('fr-FR');
 
-    const qs = ['q1','q2','q3','q4'];
-
-    // ANNUAL
-    let totalDigR=0, totalDigO=0, totalInbR=0, totalInbO=0, totalSeoR=0, totalSeoO=0;
-    qs.forEach(q => {
-      const d = data[`${q}_digital`] || {realise:0,objectif:0};
-      const i = data[`${q}_inbound`] || {realise:0,objectif:0};
-      const s = data[`${q}_leads_seo`] || {realise:0,objectif:0};
-      totalDigR += d.realise; totalDigO += d.objectif;
-      totalInbR += i.realise; totalInbO += i.objectif;
-      totalSeoR += s.realise; totalSeoO += s.objectif;
+    // Calcul par quarter
+    const qData = QUARTERS.map(q => {
+      const digital = data[q.rows[0]] || 0;
+      const inbound = data[q.rows[1]] || 0;
+      const leads   = data[q.rows[2]] || 0;
+      const pD = pct(digital, q.obj_digital);
+      const pI = pct(inbound, q.obj_inbound);
+      const pL = pct(leads, q.obj_leads);
+      const score = scoreWeighted(pD, pI, pL);
+      const prime = calcPrime(score);
+      const status = getStatus(digital, inbound, leads, q);
+      return { ...q, digital, inbound, leads, pD, pI, pL, score, prime, status };
     });
 
-    function setAnnual(id, r, o, type) {
-      const pct = o > 0 ? Math.round(r/o*100) : 0;
-      const cc = colorClass(pct);
-      const fc = fillClass(pct);
-      document.getElementById(`ann-${id}-pct`).innerHTML = `<span class="${cc}">${pct}%</span>`;
-      document.getElementById(`ann-${id}-nums`).textContent = `${fmt(r,type)} / ${fmt(o,type)}`;
-      const bar = document.getElementById(`ann-${id}-bar`);
-      bar.style.width = Math.min(pct,100) + '%';
-      bar.className = `bar-fill ${fc}`;
-    }
-    setAnnual('digital', totalDigR, totalDigO, 'eur');
-    setAnnual('inbound', totalInbR, totalInbO, 'num');
-    setAnnual('seo', totalSeoR, totalSeoO, 'num');
+    // YTD
+    const ytd_digital  = qData.reduce((s,q) => s + q.digital, 0);
+    const ytd_inbound  = qData.reduce((s,q) => s + q.inbound, 0);
+    const ytd_leads    = qData.reduce((s,q) => s + q.leads, 0);
+    const ytd_prime    = qData.reduce((s,q) => s + q.prime, 0);
+    const obj_dig_ann  = QUARTERS.reduce((s,q) => s + q.obj_digital, 0);
+    const obj_inb_ann  = QUARTERS.reduce((s,q) => s + q.obj_inbound, 0);
+    const obj_lea_ann  = QUARTERS.reduce((s,q) => s + q.obj_leads, 0);
 
-    // Q CARDS
-    function buildQGrid(containerId, metric, type) {
-      let html = '';
-      qs.forEach((q, i) => {
-        const d = data[`${q}_${metric}`] || {realise:0,objectif:0};
-        const pct = d.objectif > 0 ? Math.round(d.realise/d.objectif*100) : 0;
-        const cc = colorClass(pct);
-        const fc = fillClass(pct);
-        const bc = bgClass(pct);
-        html += `
-          <div class="q-card">
-            <div class="q-label">
-              <span class="${qColors[i]}">${q.toUpperCase()}</span>
-              <span class="q-badge ${bc}">${pct}%</span>
-            </div>
-            <div class="q-val ${cc}">${fmt(d.realise, type)}</div>
-            <div class="q-obj">Objectif : ${fmt(d.objectif, type)}</div>
-            <div class="bar-track" style="margin-top:10px"><div class="bar-fill ${fc}" style="width:${Math.min(pct,100)}%"></div></div>
-          </div>`;
-      });
-      document.getElementById(containerId).innerHTML = html;
-    }
-    buildQGrid('q-digital-grid', 'digital', 'eur');
-    buildQGrid('q-inbound-grid', 'inbound', 'num');
-    buildQGrid('q-seo-grid', 'leads_seo', 'num');
+    // KPI cards
+    const pCA = pct(ytd_digital, obj_dig_ann);
+    document.getElementById('val-ca-ytd').textContent = fmt(ytd_digital);
+    document.getElementById('obj-ca-ytd').textContent = fmt(obj_dig_ann);
+    document.getElementById('prog-ca').style.width = (pCA*100).toFixed(1) + '%';
+    document.getElementById('badge-ca').textContent = (pCA*100).toFixed(0) + '%';
+    document.getElementById('badge-ca').className = 'card-badge ' + (pCA >= 1 ? 'badge-green' : pCA >= 0.7 ? 'badge-orange' : 'badge-red');
 
-    // TABLES
-    function buildTable(tbodyId, metric, type) {
-      let html = '';
-      qs.forEach((q, i) => {
-        const d = data[`${q}_${metric}`] || {realise:0,objectif:0};
-        const pct = d.objectif > 0 ? Math.round(d.realise/d.objectif*100) : 0;
-        const fc = fillClass(pct);
-        const cc = colorClass(pct);
-        html += `<tr>
-          <td><span class="q-badge ${qBg[i]}" style="font-size:0.7rem;font-weight:700;padding:2px 8px;border-radius:4px;">${q.toUpperCase()}</span></td>
-          <td style="font-weight:600">${fmt(d.realise, type)}</td>
-          <td style="color:#7d8590">${fmt(d.objectif, type)}</td>
-          <td class="td-prog">
-            <div class="mini-bar-track"><div class="mini-bar-fill ${fc}" style="width:${Math.min(pct,100)}%"></div></div>
-            <div class="pct-text ${cc}">${pct}%</div>
-          </td>
-        </tr>`;
-      });
-      document.getElementById(tbodyId).innerHTML = html;
-    }
-    buildTable('table-digital', 'digital', 'eur');
-    buildTable('table-inbound', 'inbound', 'num');
-    buildTable('table-seo', 'leads_seo', 'num');
+    const pIB = pct(ytd_inbound, obj_inb_ann);
+    document.getElementById('val-inbound-ytd').textContent = fmt(ytd_inbound);
+    document.getElementById('obj-inbound-ytd').textContent = fmt(obj_inb_ann);
+    document.getElementById('prog-inbound').style.width = (pIB*100).toFixed(1) + '%';
+    document.getElementById('badge-inbound').textContent = (pIB*100).toFixed(0) + '%';
+    document.getElementById('badge-inbound').className = 'card-badge ' + (pIB >= 1 ? 'badge-green' : pIB >= 0.7 ? 'badge-orange' : 'badge-red');
 
-    // VARIABLE RECAP
-    let varHtml = '';
-    qs.forEach((q, i) => {
-      const d = data[`${q}_digital`] || {realise:0,objectif:0};
-      const inb = data[`${q}_inbound`] || {realise:0,objectif:0};
-      const seo = data[`${q}_leads_seo`] || {realise:0,objectif:0};
+    const pL = pct(ytd_leads, obj_lea_ann);
+    document.getElementById('val-leads-ytd').textContent = ytd_leads;
+    document.getElementById('obj-leads-ytd').textContent = obj_lea_ann;
+    document.getElementById('prog-leads').style.width = (pL*100).toFixed(1) + '%';
+    document.getElementById('badge-leads').textContent = (pL*100).toFixed(0) + '%';
+    document.getElementById('badge-leads').className = 'card-badge ' + (pL >= 1 ? 'badge-green' : pL >= 0.7 ? 'badge-orange' : 'badge-red');
 
-      const digOk = d.objectif > 0 && d.realise >= d.objectif;
-      const inbOk = inb.objectif > 0 && inb.realise >= inb.objectif;
-      const seoOk = seo.objectif > 0 && seo.realise >= seo.objectif;
-      const allOk = digOk && inbOk && seoOk;
-      const noneStarted = d.realise === 0 && inb.realise === 0 && seo.realise === 0;
+    const pPrime = ytd_prime / 3400;
+    document.getElementById('val-prime-ytd').textContent = ytd_prime + ' €';
+    document.getElementById('prog-prime').style.width = (Math.min(pPrime,1)*100).toFixed(1) + '%';
+    document.getElementById('badge-prime').textContent = ytd_prime + ' / 3 400 €';
+    document.getElementById('badge-prime').className = 'card-badge ' + (pPrime >= 1 ? 'badge-green' : pPrime > 0 ? 'badge-orange' : 'badge-gray');
 
-      const statusText = allOk ? '✅ Déclenchée' : noneStarted ? '⏳ À venir' : '🔄 En cours';
-      const statusColor = allOk ? 'c-green' : noneStarted ? 'c-teal' : 'c-yellow';
+    // Table
+    const tbody = document.getElementById('table-body');
+    tbody.innerHTML = qData.map(q => {
+      const statusLabel = {
+        done: '<span class="status-pill pill-done">✅ Déclenchée</span>',
+        fail: '<span class="status-pill pill-fail">❌ Non atteinte</span>',
+        progress: '<span class="status-pill pill-progress">🔄 En cours</span>',
+        upcoming: '<span class="status-pill pill-upcoming">⏳ À venir</span>'
+      }[q.status];
 
-      const pill = (label, ok) => `<span class="v-pill ${ok ? 'bg-green' : 'bg-red'}">${ok ? '✓' : '✗'} ${label}</span>`;
+      const fmtCell = (val, obj) => {
+        if (val === 0) return `<span class="dash">—</span>`;
+        const p = pct(val, obj);
+        const icon = p >= 1 ? '✓' : p >= 0.7 ? '~' : '✗';
+        const cls = p >= 1 ? 'check' : p >= 0.7 ? '' : 'cross';
+        return `<span class="${cls}">${icon}</span> ${typeof val === 'number' && val > 500 ? fmt(val) : val} <span style="color:#7d8590;font-size:11px">(${(p*100).toFixed(0)}%)</span>`;
+      };
 
-      varHtml += `
-        <div class="variable-card">
-          <div class="v-q ${qColors[i]}">${q.toUpperCase()}</div>
-          <div class="v-status ${statusColor}">${statusText}</div>
-          <div class="v-detail">
-            ${pill('CA Digital', digOk)}<br>
-            ${pill('Inbound', inbOk)}<br>
-            ${pill('Leads SEO', seoOk)}
-          </div>
-        </div>`;
-    });
-    document.getElementById('variable-grid').innerHTML = varHtml;
+      return `<tr>
+        <td class="quarter-label">${q.label}</td>
+        <td>${statusLabel}</td>
+        <td>${fmtCell(q.digital, q.obj_digital)}</td>
+        <td>${fmtCell(q.inbound, q.obj_inbound)}</td>
+        <td>${fmtCell(q.leads, q.obj_leads)}</td>
+        <td>
+          <strong style="color:${q.score >= 1 ? '#3fb950' : q.score >= 0.7 ? '#d29922' : '#f85149'}">${(q.score*100).toFixed(1)}%</strong>
+          <span style="color:#7d8590;font-size:11px"> / seuil 70%</span>
+        </td>
+      </tr>`;
+    }).join('');
+
+    // Prime cards
+    const primeGrid = document.getElementById('prime-grid');
+    primeGrid.innerHTML = qData.map(q => {
+      const cardClass = q.status === 'upcoming' ? 'upcoming' : q.prime >= PRIME_MAX ? 'triggered' : q.prime > 0 ? 'partial' : q.status === 'fail' ? 'failed' : 'upcoming';
+      const amtClass = q.prime >= PRIME_MAX ? 'green' : q.prime > 0 ? 'orange' : q.status === 'fail' ? 'red' : 'gray';
+      const amtLabel = q.status === 'upcoming' ? '? €' : q.prime + ' €';
+
+      return `<div class="prime-card ${cardClass}">
+        <div class="prime-quarter">${q.label} · Prime trimestrielle</div>
+        <div class="prime-amount ${amtClass}">${amtLabel}</div>
+        <div class="prime-score">Score : ${q.status === 'upcoming' ? '—' : (q.score*100).toFixed(1) + '%'} · Seuil 70%</div>
+        <div class="prime-breakdown">
+          <div class="breakdown-row"><span>CA Digital (70%)</span><span>${q.status === 'upcoming' ? '—' : (q.pD*100).toFixed(0) + '%'}</span></div>
+          <div class="breakdown-row"><span>Inbound (15%)</span><span>${q.status === 'upcoming' ? '—' : (q.pI*100).toFixed(0) + '%'}</span></div>
+          <div class="breakdown-row"><span>Leads SEO (15%)</span><span>${q.status === 'upcoming' ? '—' : (q.pL*100).toFixed(0) + '%'}</span></div>
+          <div class="breakdown-row" style="margin-top:4px;border-top:1px solid #30363d;padding-top:4px"><span>Max</span><span>850 €</span></div>
+        </div>
+      </div>`;
+    }).join('');
 
   } catch(e) {
     console.error('Erreur:', e);
-    document.getElementById('last-update').textContent = 'Erreur de chargement — ' + e.message;
+    document.getElementById('last-update').textContent = 'Erreur — ' + e.message;
   }
 }
 
