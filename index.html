@@ -1,132 +1,223 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dashboard Performance</title>
-<style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { background: #0d1117; color: #e6edf3; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; padding: 24px; min-height: 100vh; }
-  
-  h1 { font-size: 20px; font-weight: 600; color: #f0f6fc; margin-bottom: 4px; }
-  .subtitle { font-size: 13px; color: #7d8590; margin-bottom: 24px; }
-  
-  .grid-top { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
-  
-  .card { background: #161b22; border: 1px solid #30363d; border-radius: 10px; padding: 20px; }
-  .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
-  .card-title { font-size: 12px; color: #7d8590; text-transform: uppercase; letter-spacing: 0.5px; }
-  .card-badge { font-size: 11px; padding: 2px 8px; border-radius: 20px; font-weight: 500; }
-  .badge-green { background: #1a3a2a; color: #3fb950; }
-  .badge-red { background: #3a1a1a; color: #f85149; }
-  .badge-gray { background: #21262d; color: #7d8590; }
-  .badge-orange { background: #3a2a1a; color: #d29922; }
-  
-  .card-value { font-size: 28px; font-weight: 700; color: #f0f6fc; margin-bottom: 4px; }
-  .card-sub { font-size: 12px; color: #7d8590; }
-  
-  .progress-bar { background: #21262d; border-radius: 4px; height: 6px; margin-top: 12px; overflow: hidden; }
-  .progress-fill { height: 100%; border-radius: 4px; transition: width 0.6s ease; }
-  .fill-green { background: #3fb950; }
-  .fill-red { background: #f85149; }
-  .fill-orange { background: #d29922; }
-  
-  /* Table */
-  .table-section { background: #161b22; border: 1px solid #30363d; border-radius: 10px; overflow: hidden; margin-bottom: 24px; }
-  .table-header { padding: 16px 20px; border-bottom: 1px solid #30363d; display: flex; justify-content: space-between; align-items: center; }
-  .table-header h2 { font-size: 15px; font-weight: 600; }
-  .last-update { font-size: 12px; color: #7d8590; }
-  
-  table { width: 100%; border-collapse: collapse; }
-  th { background: #0d1117; padding: 10px 20px; text-align: left; font-size: 11px; color: #7d8590; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid #30363d; }
-  td { padding: 14px 20px; font-size: 13px; border-bottom: 1px solid #21262d; }
-  tr:last-child td { border-bottom: none; }
-  tr:hover td { background: #1c2128; }
-  
-  .quarter-label { font-weight: 600; color: #f0f6fc; }
-  .status-pill { display: inline-flex; align-items: center; gap: 5px; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 500; }
-  .pill-done { background: #1a3a2a; color: #3fb950; }
-  .pill-progress { background: #1a2a3a; color: #58a6ff; }
-  .pill-upcoming { background: #21262d; color: #7d8590; }
-  .pill-fail { background: #3a1a1a; color: #f85149; }
-  
-  .check { color: #3fb950; }
-  .cross { color: #f85149; }
-  .dash { color: #7d8590; }
-  
-  /* Prime cards */
-  .prime-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
-  .prime-card { background: #161b22; border: 1px solid #30363d; border-radius: 10px; padding: 20px; }
-  .prime-card.triggered { border-color: #3fb950; background: #0d1f15; }
-  .prime-card.partial { border-color: #d29922; background: #1a150a; }
-  .prime-card.failed { border-color: #f85149; background: #1a0d0d; }
-  .prime-card.upcoming { border-color: #30363d; }
-  
-  .prime-quarter { font-size: 12px; color: #7d8590; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
-  .prime-amount { font-size: 32px; font-weight: 700; margin-bottom: 4px; }
-  .prime-amount.green { color: #3fb950; }
-  .prime-amount.orange { color: #d29922; }
-  .prime-amount.red { color: #f85149; }
-  .prime-amount.gray { color: #7d8590; }
-  .prime-score { font-size: 12px; color: #7d8590; margin-bottom: 12px; }
-  
-  .prime-breakdown { display: flex; flex-direction: column; gap: 4px; margin-top: 10px; border-top: 1px solid #30363d; padding-top: 10px; }
-  .breakdown-row { display: flex; justify-content: space-between; font-size: 11px; color: #7d8590; }
-  .breakdown-row span:last-child { color: #e6edf3; font-weight: 500; }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard Variable Ivan</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #0f0f1a;
+      color: #fff;
+      min-height: 100vh;
+      padding: 24px;
+    }
+    header { margin-bottom: 24px; }
+    header h1 { font-size: 24px; font-weight: 700; }
+    header p { font-size: 13px; color: #6b7280; margin-top: 4px; }
 
-  .section-title { font-size: 13px; color: #7d8590; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; }
-</style>
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .kpi-card {
+      background: #1a1a2e;
+      border-radius: 12px;
+      padding: 20px;
+    }
+    .kpi-card .kpi-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .kpi-card .kpi-label {
+      font-size: 12px;
+      color: #9ca3af;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .kpi-card .kpi-badge {
+      font-size: 12px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 99px;
+      background: #ef4444;
+      color: #fff;
+    }
+    .kpi-card .kpi-badge.green { background: #22c55e; }
+    .kpi-card .kpi-badge.orange { background: #f97316; }
+    .kpi-card .kpi-value {
+      font-size: 32px;
+      font-weight: 700;
+      margin: 4px 0;
+    }
+    .kpi-card .kpi-sub {
+      font-size: 13px;
+      color: #6b7280;
+      margin-bottom: 12px;
+    }
+    .progress-bar {
+      height: 4px;
+      background: #2d2d44;
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      border-radius: 2px;
+      background: #6366f1;
+      transition: width 0.5s ease;
+    }
+
+    .section {
+      background: #1a1a2e;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 24px;
+    }
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+    .section-header h2 { font-size: 16px; font-weight: 700; }
+    .section-header span { font-size: 12px; color: #6b7280; }
+
+    table { width: 100%; border-collapse: collapse; }
+    thead tr { border-bottom: 1px solid #2d2d44; }
+    th {
+      text-align: left;
+      padding: 10px 12px;
+      font-size: 11px;
+      color: #6b7280;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    td {
+      padding: 14px 12px;
+      font-size: 14px;
+      border-bottom: 1px solid #2d2d44;
+    }
+    tr:last-child td { border-bottom: none; }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 10px;
+      border-radius: 99px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .badge.avenir { background: #2d2d44; color: #9ca3af; }
+    .badge.encours { background: #1e3a5f; color: #60a5fa; }
+    .badge.atteint { background: #14532d; color: #4ade80; }
+    .badge.non-atteint { background: #450a0a; color: #f87171; }
+
+    .score-red { color: #ef4444; font-weight: 700; }
+    .score-orange { color: #f97316; font-weight: 700; }
+    .score-green { color: #22c55e; font-weight: 700; }
+
+    .prime-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 8px;
+    }
+    .prime-card {
+      background: #1a1a2e;
+      border-radius: 12px;
+      padding: 16px;
+    }
+    .prime-card .prime-label {
+      font-size: 11px;
+      color: #6b7280;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+    }
+    .prime-card .prime-value {
+      font-size: 28px;
+      font-weight: 700;
+    }
+    .prime-section-label {
+      font-size: 12px;
+      color: #6b7280;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 12px;
+    }
+
+    .error-banner {
+      background: #450a0a;
+      color: #f87171;
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+      font-size: 14px;
+      display: none;
+    }
+  </style>
 </head>
 <body>
 
-<h1>📊 Dashboard Performance Digital</h1>
-<p class="subtitle">Mise à jour automatique toutes les 5 minutes · <span id="last-update">Chargement...</span></p>
+<header>
+  <h1>📊 Dashboard Variable Ivan</h1>
+  <p>Mise à jour automatique toutes les 5 minutes · Mis à jour · <span id="lastUpdate">--:--:--</span></p>
+</header>
 
-<!-- KPI Cards -->
-<div class="grid-top">
-  <div class="card">
-    <div class="card-header">
-      <span class="card-title">CA Digital YTD</span>
-      <span class="card-badge badge-gray" id="badge-ca">—</span>
+<div class="error-banner" id="errorBanner">
+  ⚠️ Impossible de charger les données. Vérifiez que le Google Sheet est bien publié en CSV.
+</div>
+
+<div class="kpi-grid">
+  <div class="kpi-card">
+    <div class="kpi-header">
+      <span class="kpi-label">CA Digital YTD</span>
+      <span class="kpi-badge" id="badge-ca-digital">0%</span>
     </div>
-    <div class="card-value" id="val-ca-ytd">—</div>
-    <div class="card-sub" id="sub-ca">sur <span id="obj-ca-ytd">—</span> objectif</div>
-    <div class="progress-bar"><div class="progress-fill fill-green" id="prog-ca" style="width:0%"></div></div>
+    <div class="kpi-value" id="val-ca-digital">0 €</div>
+    <div class="kpi-sub" id="sub-ca-digital">sur 100k€ objectif</div>
+    <div class="progress-bar"><div class="progress-bar-fill" id="bar-ca-digital" style="width:0%"></div></div>
   </div>
-  <div class="card">
-    <div class="card-header">
-      <span class="card-title">CA Inbound YTD</span>
-      <span class="card-badge badge-gray" id="badge-inbound">—</span>
+  <div class="kpi-card">
+    <div class="kpi-header">
+      <span class="kpi-label">CA Inbound YTD</span>
+      <span class="kpi-badge" id="badge-ca-inbound">0%</span>
     </div>
-    <div class="card-value" id="val-inbound-ytd">—</div>
-    <div class="card-sub">sur <span id="obj-inbound-ytd">—</span> objectif</div>
-    <div class="progress-bar"><div class="progress-fill fill-green" id="prog-inbound" style="width:0%"></div></div>
+    <div class="kpi-value" id="val-ca-inbound">0 €</div>
+    <div class="kpi-sub" id="sub-ca-inbound">sur 250k€ objectif</div>
+    <div class="progress-bar"><div class="progress-bar-fill" id="bar-ca-inbound" style="width:0%"></div></div>
   </div>
-  <div class="card">
-    <div class="card-header">
-      <span class="card-title">Leads SEO YTD</span>
-      <span class="card-badge badge-gray" id="badge-leads">—</span>
+  <div class="kpi-card">
+    <div class="kpi-header">
+      <span class="kpi-label">Leads SEO YTD</span>
+      <span class="kpi-badge" id="badge-leads">0%</span>
     </div>
-    <div class="card-value" id="val-leads-ytd">—</div>
-    <div class="card-sub">sur <span id="obj-leads-ytd">—</span> objectif</div>
-    <div class="progress-bar"><div class="progress-fill fill-green" id="prog-leads" style="width:0%"></div></div>
+    <div class="kpi-value" id="val-leads">0</div>
+    <div class="kpi-sub" id="sub-leads">sur 350 objectif</div>
+    <div class="progress-bar"><div class="progress-bar-fill" id="bar-leads" style="width:0%"></div></div>
   </div>
-  <div class="card">
-    <div class="card-header">
-      <span class="card-title">Prime YTD</span>
-      <span class="card-badge badge-gray" id="badge-prime">—</span>
+  <div class="kpi-card">
+    <div class="kpi-header">
+      <span class="kpi-label">Prime YTD</span>
+      <span class="kpi-badge" id="badge-prime" style="background:#374151;">0 / 3 400 €</span>
     </div>
-    <div class="card-value" id="val-prime-ytd">—</div>
-    <div class="card-sub" id="sub-prime">sur 3 400 € annuel</div>
-    <div class="progress-bar"><div class="progress-fill fill-green" id="prog-prime" style="width:0%"></div></div>
+    <div class="kpi-value" id="val-prime">0 €</div>
+    <div class="kpi-sub">sur 3 400 € annuel</div>
+    <div class="progress-bar"><div class="progress-bar-fill" id="bar-prime" style="width:0%"></div></div>
   </div>
 </div>
 
-<!-- Table -->
-<div class="table-section">
-  <div class="table-header">
+<div class="section">
+  <div class="section-header">
     <h2>Suivi trimestriel</h2>
-    <span class="last-update" id="last-update2">—</span>
+    <span>Mis à jour · <span id="lastUpdate2">--:--:--</span></span>
   </div>
   <table>
     <thead>
@@ -136,206 +227,227 @@
         <th>CA Digital</th>
         <th>CA Inbound</th>
         <th>Leads SEO</th>
-        <th>Score pondéré</th>
+        <th>Score Pondéré</th>
       </tr>
     </thead>
-    <tbody id="table-body">
-      <tr><td colspan="6" style="text-align:center;color:#7d8590;padding:32px">Chargement...</td></tr>
+    <tbody id="quarterly-tbody">
+      <tr><td colspan="6" style="text-align:center;color:#6b7280;padding:20px;">Chargement...</td></tr>
     </tbody>
   </table>
 </div>
 
-<!-- Prime Cards -->
-<p class="section-title">Prime individuelle · 850 € / quarter</p>
-<div class="prime-grid" id="prime-grid">
-  <!-- dynamique -->
+<div class="prime-section-label">PRIME INDIVIDUELLE · 850 € / QUARTER</div>
+<div class="prime-grid">
+  <div class="prime-card">
+    <div class="prime-label">Q1 · Prime Trimestrielle</div>
+    <div class="prime-value" id="prime-q1">? €</div>
+  </div>
+  <div class="prime-card">
+    <div class="prime-label">Q2 · Prime Trimestrielle</div>
+    <div class="prime-value" id="prime-q2">? €</div>
+  </div>
+  <div class="prime-card">
+    <div class="prime-label">Q3 · Prime Trimestrielle</div>
+    <div class="prime-value" id="prime-q3">? €</div>
+  </div>
+  <div class="prime-card">
+    <div class="prime-label">Q4 · Prime Trimestrielle</div>
+    <div class="prime-value" id="prime-q4">? €</div>
+  </div>
 </div>
 
 <script>
-const SHEET_ID = '1VlCRY4OuDzO28TJ4GEEGDBxTj2IQTLuT4HbAiyqe4Ac';
-const SHEET_NAME = 'Feuille1';
-const CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(SHEET_NAME)}`;
+  const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTBJmcK5aCY8lIGqOLnvgcKjO1I8uZMI90XkUagFMUXqXXoD4QKMwPnyZNifpMseYiAfn6fIlxo0hTk/pub?output=csv";
 
-const PRIME_MAX = 850;
-const PRIME_THRESHOLD = 0.70;
+  const OBJECTIFS = {
+    caDigital: 100000,
+    caInbound: 250000,
+    leads: 350,
+    prime: 3400
+  };
 
-const QUARTERS = [
-  {
-    key: 'q1', label: 'Q1',
-    obj_digital: 25000, obj_inbound: 58250, obj_leads: 100,
-    rows: ['q1_digital','q1_inbound','q1_leads_seo']
-  },
-  {
-    key: 'q2', label: 'Q2',
-    obj_digital: 25000, obj_inbound: 71500, obj_leads: 93,
-    rows: ['q2_digital','q2_inbound','q2_leads_seo']
-  },
-  {
-    key: 'q3', label: 'Q3',
-    obj_digital: 25000, obj_inbound: 53000, obj_leads: 69,
-    rows: ['q3_digital','q3_inbound','q3_leads_seo']
-  },
-  {
-    key: 'q4', label: 'Q4',
-    obj_digital: 25000, obj_inbound: 67000, obj_leads: 88,
-    rows: ['q4_digital','q4_inbound','q4_leads_seo']
+  const WEIGHTS = { caDigital: 0.3, caInbound: 0.5, leads: 0.2 };
+  const OBJ_Q = { caDigital: 25000, caInbound: 62500, leads: 87.5 };
+  const PRIME_Q = 850;
+  const SEUIL = 0.70;
+
+  function parseCSV(text) {
+    const lines = text.trim().split('\n');
+    const headers = lines[0].split(',').map(h => h.trim().replace(/"/g, ''));
+    return lines.slice(1).map(line => {
+      const vals = line.split(',').map(v => v.trim().replace(/"/g, ''));
+      const obj = {};
+      headers.forEach((h, i) => obj[h] = vals[i] || '');
+      return obj;
+    });
   }
-];
 
-function fmt(n) {
-  if (n >= 1000) return (n/1000).toFixed(0) + 'k€';
-  return n.toFixed(0) + '€';
-}
-function pct(val, obj) {
-  return Math.min(val / obj, 1);
-}
-function scoreWeighted(pDigital, pInbound, pLeads) {
-  return (Math.min(pDigital,1) * 0.70) + (Math.min(pInbound,1) * 0.15) + (Math.min(pLeads,1) * 0.15);
-}
-function calcPrime(score) {
-  if (score < PRIME_THRESHOLD) return 0;
-  return Math.round((score / 1) * PRIME_MAX);
-}
-function getStatus(digital, inbound, leads, q) {
-  const hasData = digital > 0 || inbound > 0 || leads > 0;
-  if (!hasData) return 'upcoming';
-  const score = scoreWeighted(pct(digital, q.obj_digital), pct(inbound, q.obj_inbound), pct(leads, q.obj_leads));
-  // Détecter si quarter terminé : toutes les 3 métriques ont des données
-  const complete = digital > 0 && inbound > 0 && leads > 0;
-  if (!complete) return 'progress';
-  if (score >= PRIME_THRESHOLD) return 'done';
-  return 'fail';
-}
+  function parseNum(v) {
+    if (!v) return 0;
+    return parseFloat(v.toString().replace(/[^0-9.-]/g, '')) || 0;
+  }
 
-async function loadData() {
-  try {
-    const res = await fetch(CSV_URL + '&t=' + Date.now());
-    const text = await res.text();
-    const rows = text.trim().split('\n').map(r => {
-      const cols = r.split(/[,;]/);
-      return { key: cols[0].replace(/"/g,'').trim(), val: parseFloat(cols[1].replace(/"/g,'').replace(',','.')) || 0 };
+  function fmtEur(n) {
+    if (n >= 1000) return (n/1000).toFixed(1).replace('.0','') + 'k€';
+    return n.toLocaleString('fr-FR') + ' €';
+  }
+
+  function scoreColor(s) {
+    if (s >= 1) return 'score-green';
+    if (s >= 0.7) return 'score-orange';
+    return 'score-red';
+  }
+
+  function badgeClass(pct) {
+    if (pct >= 1) return 'green';
+    if (pct >= 0.7) return 'orange';
+    return '';
+  }
+
+  function getStatut(row) {
+    const s = (row['Statut'] || row['statut'] || '').toLowerCase();
+    if (s.includes('encours') || s.includes('en cours')) return { label: '🔵 En cours', cls: 'encours' };
+    if (s.includes('atteint') && !s.includes('non')) return { label: '✅ Atteint', cls: 'atteint' };
+    if (s.includes('non')) return { label: '❌ Non atteint', cls: 'non-atteint' };
+    return { label: '⏳ À venir', cls: 'avenir' };
+  }
+
+  function loadData() {
+    const url = CSV_URL + '&t=' + Date.now();
+    fetch(url)
+      .then(r => {
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        return r.text();
+      })
+      .then(text => {
+        document.getElementById('errorBanner').style.display = 'none';
+        const rows = parseCSV(text);
+        processData(rows);
+      })
+      .catch(err => {
+        console.error(err);
+        document.getElementById('errorBanner').style.display = 'block';
+      });
+  }
+
+  function processData(rows) {
+    const now = new Date().toLocaleTimeString('fr-FR');
+    document.getElementById('lastUpdate').textContent = now;
+    document.getElementById('lastUpdate2').textContent = now;
+
+    // Colonnes possibles
+    const colMap = {
+      caDigital: ['CA Digital','ca_digital','CA_Digital','cadigital','Ca Digital'],
+      caInbound: ['CA Inbound','ca_inbound','CA_Inbound','cainbound','Ca Inbound'],
+      leads: ['Leads SEO','leads_seo','Leads_SEO','leads','Leads'],
+      quarter: ['Quarter','quarter','Q','Trimestre']
+    };
+
+    function findCol(row, keys) {
+      for (const k of keys) {
+        if (row[k] !== undefined) return row[k];
+      }
+      // fallback: partial match
+      const rk = Object.keys(row);
+      for (const k of keys) {
+        const found = rk.find(r => r.toLowerCase().includes(k.toLowerCase()));
+        if (found) return row[found];
+      }
+      return '';
+    }
+
+    let totCaDigital = 0, totCaInbound = 0, totLeads = 0, totPrime = 0;
+    const quarters = ['Q1','Q2','Q3','Q4'];
+    const qData = {};
+
+    rows.forEach(row => {
+      const q = findCol(row, colMap.quarter).toString().toUpperCase().trim();
+      const cd = parseNum(findCol(row, colMap.caDigital));
+      const ci = parseNum(findCol(row, colMap.caInbound));
+      const ls = parseNum(findCol(row, colMap.leads));
+
+      if (quarters.includes(q)) {
+        qData[q] = { caDigital: cd, caInbound: ci, leads: ls, row };
+        totCaDigital += cd;
+        totCaInbound += ci;
+        totLeads += ls;
+      }
     });
 
-    console.log('DATA:', rows);
+    // KPI Cards
+    const pctCaD = Math.min(totCaDigital / OBJECTIFS.caDigital, 1);
+    const pctCaI = Math.min(totCaInbound / OBJECTIFS.caInbound, 1);
+    const pctL = Math.min(totLeads / OBJECTIFS.leads, 1);
 
-    // Map
-    const data = {};
-    rows.forEach(r => { data[r.key] = r.val; });
+    document.getElementById('val-ca-digital').textContent = fmtEur(totCaDigital);
+    document.getElementById('bar-ca-digital').style.width = (pctCaD*100)+'%';
+    const bcd = document.getElementById('badge-ca-digital');
+    bcd.textContent = Math.round(pctCaD*100)+'%';
+    bcd.className = 'kpi-badge ' + badgeClass(pctCaD);
 
-    const now = new Date();
-    document.getElementById('last-update').textContent = 'Mis à jour · ' + now.toLocaleTimeString('fr-FR');
-    document.getElementById('last-update2').textContent = 'Mis à jour · ' + now.toLocaleTimeString('fr-FR');
+    document.getElementById('val-ca-inbound').textContent = fmtEur(totCaInbound);
+    document.getElementById('bar-ca-inbound').style.width = (pctCaI*100)+'%';
+    const bci = document.getElementById('badge-ca-inbound');
+    bci.textContent = Math.round(pctCaI*100)+'%';
+    bci.className = 'kpi-badge ' + badgeClass(pctCaI);
 
-    // Calcul par quarter
-    const qData = QUARTERS.map(q => {
-      const digital = data[q.rows[0]] || 0;
-      const inbound = data[q.rows[1]] || 0;
-      const leads   = data[q.rows[2]] || 0;
-      const pD = pct(digital, q.obj_digital);
-      const pI = pct(inbound, q.obj_inbound);
-      const pL = pct(leads, q.obj_leads);
-      const score = scoreWeighted(pD, pI, pL);
-      const prime = calcPrime(score);
-      const status = getStatus(digital, inbound, leads, q);
-      return { ...q, digital, inbound, leads, pD, pI, pL, score, prime, status };
+    document.getElementById('val-leads').textContent = totLeads;
+    document.getElementById('bar-leads').style.width = (pctL*100)+'%';
+    const bl = document.getElementById('badge-leads');
+    bl.textContent = Math.round(pctL*100)+'%';
+    bl.className = 'kpi-badge ' + badgeClass(pctL);
+
+    // Prime
+    quarters.forEach((q, i) => {
+      const d = qData[q];
+      let prime = 0;
+      if (d) {
+        const score = (d.caDigital/OBJ_Q.caDigital)*WEIGHTS.caDigital
+                    + (d.caInbound/OBJ_Q.caInbound)*WEIGHTS.caInbound
+                    + (d.leads/OBJ_Q.leads)*WEIGHTS.leads;
+        if (score >= SEUIL) prime = PRIME_Q;
+      }
+      totPrime += prime;
+      document.getElementById('prime-q'+(i+1)).textContent = prime + ' €';
     });
 
-    // YTD
-    const ytd_digital  = qData.reduce((s,q) => s + q.digital, 0);
-    const ytd_inbound  = qData.reduce((s,q) => s + q.inbound, 0);
-    const ytd_leads    = qData.reduce((s,q) => s + q.leads, 0);
-    const ytd_prime    = qData.reduce((s,q) => s + q.prime, 0);
-    const obj_dig_ann  = QUARTERS.reduce((s,q) => s + q.obj_digital, 0);
-    const obj_inb_ann  = QUARTERS.reduce((s,q) => s + q.obj_inbound, 0);
-    const obj_lea_ann  = QUARTERS.reduce((s,q) => s + q.obj_leads, 0);
+    const pctP = Math.min(totPrime / OBJECTIFS.prime, 1);
+    document.getElementById('val-prime').textContent = totPrime + ' €';
+    document.getElementById('bar-prime').style.width = (pctP*100)+'%';
+    document.getElementById('badge-prime').textContent = totPrime + ' / 3 400 €';
 
-    // KPI cards
-    const pCA = pct(ytd_digital, obj_dig_ann);
-    document.getElementById('val-ca-ytd').textContent = fmt(ytd_digital);
-    document.getElementById('obj-ca-ytd').textContent = fmt(obj_dig_ann);
-    document.getElementById('prog-ca').style.width = (pCA*100).toFixed(1) + '%';
-    document.getElementById('badge-ca').textContent = (pCA*100).toFixed(0) + '%';
-    document.getElementById('badge-ca').className = 'card-badge ' + (pCA >= 1 ? 'badge-green' : pCA >= 0.7 ? 'badge-orange' : 'badge-red');
+    // Tableau trimestriel
+    const tbody = document.getElementById('quarterly-tbody');
+    tbody.innerHTML = '';
+    quarters.forEach(q => {
+      const d = qData[q];
+      const statut = d ? getStatut(d.row) : { label: '⏳ À venir', cls: 'avenir' };
+      const cd = d ? d.caDigital : null;
+      const ci = d ? d.caInbound : null;
+      const ls = d ? d.leads : null;
 
-    const pIB = pct(ytd_inbound, obj_inb_ann);
-    document.getElementById('val-inbound-ytd').textContent = fmt(ytd_inbound);
-    document.getElementById('obj-inbound-ytd').textContent = fmt(obj_inb_ann);
-    document.getElementById('prog-inbound').style.width = (pIB*100).toFixed(1) + '%';
-    document.getElementById('badge-inbound').textContent = (pIB*100).toFixed(0) + '%';
-    document.getElementById('badge-inbound').className = 'card-badge ' + (pIB >= 1 ? 'badge-green' : pIB >= 0.7 ? 'badge-orange' : 'badge-red');
+      let score = 0;
+      if (d) {
+        score = (d.caDigital/OBJ_Q.caDigital)*WEIGHTS.caDigital
+               + (d.caInbound/OBJ_Q.caInbound)*WEIGHTS.caInbound
+               + (d.leads/OBJ_Q.leads)*WEIGHTS.leads;
+      }
 
-    const pL = pct(ytd_leads, obj_lea_ann);
-    document.getElementById('val-leads-ytd').textContent = ytd_leads;
-    document.getElementById('obj-leads-ytd').textContent = obj_lea_ann;
-    document.getElementById('prog-leads').style.width = (pL*100).toFixed(1) + '%';
-    document.getElementById('badge-leads').textContent = (pL*100).toFixed(0) + '%';
-    document.getElementById('badge-leads').className = 'card-badge ' + (pL >= 1 ? 'badge-green' : pL >= 0.7 ? 'badge-orange' : 'badge-red');
-
-    const pPrime = ytd_prime / 3400;
-    document.getElementById('val-prime-ytd').textContent = ytd_prime + ' €';
-    document.getElementById('prog-prime').style.width = (Math.min(pPrime,1)*100).toFixed(1) + '%';
-    document.getElementById('badge-prime').textContent = ytd_prime + ' / 3 400 €';
-    document.getElementById('badge-prime').className = 'card-badge ' + (pPrime >= 1 ? 'badge-green' : pPrime > 0 ? 'badge-orange' : 'badge-gray');
-
-    // Table
-    const tbody = document.getElementById('table-body');
-    tbody.innerHTML = qData.map(q => {
-      const statusLabel = {
-        done: '<span class="status-pill pill-done">✅ Déclenchée</span>',
-        fail: '<span class="status-pill pill-fail">❌ Non atteinte</span>',
-        progress: '<span class="status-pill pill-progress">🔄 En cours</span>',
-        upcoming: '<span class="status-pill pill-upcoming">⏳ À venir</span>'
-      }[q.status];
-
-      const fmtCell = (val, obj) => {
-        if (val === 0) return `<span class="dash">—</span>`;
-        const p = pct(val, obj);
-        const icon = p >= 1 ? '✓' : p >= 0.7 ? '~' : '✗';
-        const cls = p >= 1 ? 'check' : p >= 0.7 ? '' : 'cross';
-        return `<span class="${cls}">${icon}</span> ${typeof val === 'number' && val > 500 ? fmt(val) : val} <span style="color:#7d8590;font-size:11px">(${(p*100).toFixed(0)}%)</span>`;
-      };
-
-      return `<tr>
-        <td class="quarter-label">${q.label}</td>
-        <td>${statusLabel}</td>
-        <td>${fmtCell(q.digital, q.obj_digital)}</td>
-        <td>${fmtCell(q.inbound, q.obj_inbound)}</td>
-        <td>${fmtCell(q.leads, q.obj_leads)}</td>
-        <td>
-          <strong style="color:${q.score >= 1 ? '#3fb950' : q.score >= 0.7 ? '#d29922' : '#f85149'}">${(q.score*100).toFixed(1)}%</strong>
-          <span style="color:#7d8590;font-size:11px"> / seuil 70%</span>
-        </td>
-      </tr>`;
-    }).join('');
-
-    // Prime cards
-    const primeGrid = document.getElementById('prime-grid');
-    primeGrid.innerHTML = qData.map(q => {
-      const cardClass = q.status === 'upcoming' ? 'upcoming' : q.prime >= PRIME_MAX ? 'triggered' : q.prime > 0 ? 'partial' : q.status === 'fail' ? 'failed' : 'upcoming';
-      const amtClass = q.prime >= PRIME_MAX ? 'green' : q.prime > 0 ? 'orange' : q.status === 'fail' ? 'red' : 'gray';
-      const amtLabel = q.status === 'upcoming' ? '? €' : q.prime + ' €';
-
-      return `<div class="prime-card ${cardClass}">
-        <div class="prime-quarter">${q.label} · Prime trimestrielle</div>
-        <div class="prime-amount ${amtClass}">${amtLabel}</div>
-        <div class="prime-score">Score : ${q.status === 'upcoming' ? '—' : (q.score*100).toFixed(1) + '%'} · Seuil 70%</div>
-        <div class="prime-breakdown">
-          <div class="breakdown-row"><span>CA Digital (70%)</span><span>${q.status === 'upcoming' ? '—' : (q.pD*100).toFixed(0) + '%'}</span></div>
-          <div class="breakdown-row"><span>Inbound (15%)</span><span>${q.status === 'upcoming' ? '—' : (q.pI*100).toFixed(0) + '%'}</span></div>
-          <div class="breakdown-row"><span>Leads SEO (15%)</span><span>${q.status === 'upcoming' ? '—' : (q.pL*100).toFixed(0) + '%'}</span></div>
-          <div class="breakdown-row" style="margin-top:4px;border-top:1px solid #30363d;padding-top:4px"><span>Max</span><span>850 €</span></div>
-        </div>
-      </div>`;
-    }).join('');
-
-  } catch(e) {
-    console.error('Erreur:', e);
-    document.getElementById('last-update').textContent = 'Erreur — ' + e.message;
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td><strong>${q}</strong></td>
+        <td><span class="badge ${statut.cls}">${statut.label}</span></td>
+        <td>${cd !== null && cd > 0 ? fmtEur(cd) : '—'}</td>
+        <td>${ci !== null && ci > 0 ? fmtEur(ci) : '—'}</td>
+        <td>${ls !== null && ls > 0 ? ls : '—'}</td>
+        <td><span class="${scoreColor(score)}">${(score*100).toFixed(1)}%</span> <span style="color:#6b7280;font-size:12px">/ seuil 70%</span></td>
+      `;
+      tbody.appendChild(tr);
+    });
   }
-}
 
-loadData();
-setInterval(loadData, 300000);
+  loadData();
+  setInterval(loadData, 5 * 60 * 1000);
 </script>
 </body>
 </html>
