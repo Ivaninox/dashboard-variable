@@ -5,279 +5,474 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dashboard Marketing 2025</title>
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { background: #0f1117; color: #e2e8f0; font-family: 'Segoe UI', sans-serif; padding: 24px; }
-  h1 { font-size: 2rem; font-weight: 700; margin-bottom: 4px; }
-  .subtitle { color: #94a3b8; font-size: 0.9rem; margin-bottom: 6px; }
-  .last-update { font-size: 0.8rem; color: #64748b; margin-bottom: 28px; }
-  .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #22c55e; margin-right: 6px; }
 
-  /* KPI ANNUELS */
-  .section-title { font-size: 1.1rem; font-weight: 600; margin-bottom: 16px; }
-  .kpi-grid-top { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 28px; background: #1e2130; padding: 20px; border-radius: 12px; }
-  .kpi-annual { text-align: center; }
-  .kpi-annual .label { font-size: 0.7rem; font-weight: 700; color: #94a3b8; letter-spacing: 0.1em; margin-bottom: 8px; }
-  .kpi-annual .pct { font-size: 2rem; font-weight: 800; }
-  .kpi-annual .sub { font-size: 0.8rem; color: #64748b; margin-top: 4px; }
-  .progress-bar-wrap { background: #2d3348; border-radius: 4px; height: 6px; margin-top: 10px; }
-  .progress-bar { height: 6px; border-radius: 4px; }
+  body {
+    background: #0d1117;
+    color: #e6edf3;
+    font-family: 'Inter', sans-serif;
+    padding: 32px;
+    min-height: 100vh;
+  }
 
-  /* KPI TRIMESTRIELS */
-  .kpi-grid-q { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 28px; }
-  .kpi-card { background: #1e2130; border-radius: 12px; padding: 18px 20px; border-top: 3px solid; }
-  .kpi-card .card-label { font-size: 0.75rem; font-weight: 700; color: #94a3b8; letter-spacing: 0.08em; margin-bottom: 10px; }
-  .kpi-card .card-value { font-size: 1.6rem; font-weight: 800; margin-bottom: 6px; }
-  .kpi-card .card-obj { font-size: 0.8rem; color: #64748b; }
+  /* HEADER */
+  .header { margin-bottom: 32px; }
+  .header h1 { font-size: 1.75rem; font-weight: 700; letter-spacing: -0.02em; }
+  .header .sub { color: #7d8590; font-size: 0.85rem; margin-top: 4px; }
+  .header .update { font-size: 0.78rem; color: #7d8590; margin-top: 6px; display: flex; align-items: center; gap: 6px; }
+  .dot-live { width: 7px; height: 7px; border-radius: 50%; background: #3fb950; display: inline-block; }
 
-  /* VARIABLE BANNER */
-  .banner { border-radius: 10px; padding: 16px 20px; text-align: center; font-weight: 700; font-size: 1rem; margin-bottom: 28px; }
-  .banner.red { background: #7f1d1d; color: #fca5a5; }
-  .banner.green { background: #14532d; color: #86efac; }
+  /* SECTION LABEL */
+  .section-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: #7d8590;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    margin-top: 28px;
+  }
+
+  /* ANNUAL KPIs */
+  .annual-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: #21262d;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .annual-card {
+    background: #161b22;
+    padding: 24px;
+    text-align: center;
+  }
+  .annual-card .label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #7d8590;
+    margin-bottom: 12px;
+  }
+  .annual-card .pct {
+    font-size: 2.4rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+  .annual-card .nums {
+    font-size: 0.78rem;
+    color: #7d8590;
+    margin-top: 8px;
+  }
+  .bar-track {
+    background: #21262d;
+    border-radius: 3px;
+    height: 4px;
+    margin-top: 12px;
+    overflow: hidden;
+  }
+  .bar-fill { height: 4px; border-radius: 3px; transition: width 0.8s ease; }
+
+  /* QUARTERLY KPIs */
+  .q-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+  .q-card {
+    background: #161b22;
+    border: 1px solid #21262d;
+    border-radius: 10px;
+    padding: 18px;
+  }
+  .q-card .q-label {
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #7d8590;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .q-badge {
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 1px 6px;
+    border-radius: 4px;
+  }
+  .q-card .q-val {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  .q-card .q-obj {
+    font-size: 0.75rem;
+    color: #7d8590;
+    margin-top: 4px;
+  }
+  .q-card .q-prog {
+    font-size: 0.72rem;
+    font-weight: 600;
+    margin-top: 2px;
+  }
 
   /* TABLES */
-  .tables-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-  .table-section { background: #1e2130; border-radius: 12px; padding: 20px; }
-  .table-section h3 { font-size: 1rem; font-weight: 700; margin-bottom: 16px; }
-  table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
-  th { text-align: left; color: #64748b; font-size: 0.7rem; letter-spacing: 0.08em; padding-bottom: 10px; font-weight: 600; }
-  td { padding: 8px 0; border-top: 1px solid #2d3348; }
-  .q-badge { display: inline-block; padding: 2px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; }
-  .q1 { background: #1e3a5f; color: #60a5fa; }
-  .q2 { background: #14532d; color: #4ade80; }
-  .q3 { background: #78350f; color: #fb923c; }
-  .q4 { background: #4c1d95; color: #c084fc; }
-  .pct-cell { font-weight: 700; }
+  .tables-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .table-card {
+    background: #161b22;
+    border: 1px solid #21262d;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .table-card .table-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid #21262d;
+    font-size: 0.82rem;
+    font-weight: 600;
+  }
+  table { width: 100%; border-collapse: collapse; }
+  thead th {
+    padding: 8px 20px;
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #7d8590;
+    text-align: left;
+    background: #0d1117;
+  }
+  tbody tr { border-top: 1px solid #21262d; }
+  tbody tr:hover { background: #1c2128; }
+  tbody td { padding: 10px 20px; font-size: 0.82rem; }
+  .td-prog { min-width: 80px; }
+  .mini-bar-track { background: #21262d; border-radius: 2px; height: 4px; width: 80px; overflow: hidden; }
+  .mini-bar-fill { height: 4px; border-radius: 2px; }
+  .pct-text { font-size: 0.7rem; font-weight: 600; margin-top: 2px; }
 
-  /* COLORS */
-  .color-blue { color: #60a5fa; }
-  .color-green { color: #4ade80; }
-  .color-yellow { color: #facc15; }
-  .color-red { color: #f87171; }
-  .color-purple { color: #c084fc; }
-  .bar-blue { background: linear-gradient(90deg, #3b82f6, #60a5fa); }
-  .bar-green { background: linear-gradient(90deg, #16a34a, #4ade80); }
-  .bar-yellow { background: linear-gradient(90deg, #d97706, #facc15); }
-  .bar-purple { background: linear-gradient(90deg, #7c3aed, #c084fc); }
+  /* VARIABLE RECAP */
+  .variable-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+  .variable-card {
+    background: #161b22;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    border: 1px solid #21262d;
+  }
+  .variable-card .v-q {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #7d8590;
+    margin-bottom: 10px;
+  }
+  .variable-card .v-status {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .variable-card .v-detail {
+    font-size: 0.7rem;
+    color: #7d8590;
+    line-height: 1.6;
+  }
+  .v-pill {
+    display: inline-block;
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 20px;
+    margin: 2px 1px;
+  }
+
+  /* COULEURS */
+  .c-blue { color: #58a6ff; }
+  .c-green { color: #3fb950; }
+  .c-yellow { color: #d29922; }
+  .c-orange { color: #f0883e; }
+  .c-purple { color: #bc8cff; }
+  .c-red { color: #f85149; }
+  .c-teal { color: #39d353; }
+
+  .bg-green { background: rgba(63,185,80,0.15); color: #3fb950; }
+  .bg-yellow { background: rgba(210,153,34,0.15); color: #d29922; }
+  .bg-red { background: rgba(248,81,73,0.15); color: #f85149; }
+  .bg-blue { background: rgba(88,166,255,0.15); color: #58a6ff; }
+  .bg-purple { background: rgba(188,140,255,0.15); color: #bc8cff; }
+  .bg-orange { background: rgba(240,136,62,0.15); color: #f0883e; }
+
+  .fill-green { background: #3fb950; }
+  .fill-yellow { background: #d29922; }
+  .fill-orange { background: #f0883e; }
+  .fill-red { background: #f85149; }
+  .fill-blue { background: #58a6ff; }
+
+  .divider { height: 1px; background: #21262d; margin: 32px 0; }
 </style>
 </head>
 <body>
 
-<h1>📊 Dashboard Marketing 2025</h1>
-<p class="subtitle">Suivi des performances — CA Digital, Leads SEO, Inbound</p>
-<p class="last-update"><span class="dot"></span>Dernière mise à jour : <span id="last-update">chargement...</span></p>
-
-<!-- ATTEINTE GLOBALE ANNUELLE -->
-<div style="margin-bottom:10px"><span class="section-title">📅 Atteinte globale 2025 — Cumul annuel</span></div>
-<div class="kpi-grid-top">
-  <div class="kpi-annual">
-    <div class="label">CA DIGITAL 2025</div>
-    <div class="pct color-blue" id="pct-annual-digital">0%</div>
-    <div class="sub" id="sub-annual-digital">— / —</div>
-    <div class="progress-bar-wrap"><div class="progress-bar bar-blue" id="bar-annual-digital" style="width:0%"></div></div>
-  </div>
-  <div class="kpi-annual">
-    <div class="label">INBOUND 2025</div>
-    <div class="pct color-green" id="pct-annual-inbound">0%</div>
-    <div class="sub" id="sub-annual-inbound">— / — leads</div>
-    <div class="progress-bar-wrap"><div class="progress-bar bar-green" id="bar-annual-inbound" style="width:0%"></div></div>
-  </div>
-  <div class="kpi-annual">
-    <div class="label">LEADS SEO 2025</div>
-    <div class="pct color-yellow" id="pct-annual-seo">0%</div>
-    <div class="sub" id="sub-annual-seo">0 / 0 leads</div>
-    <div class="progress-bar-wrap"><div class="progress-bar bar-yellow" id="bar-annual-seo" style="width:0%"></div></div>
+<div class="header">
+  <h1>📊 Dashboard Marketing 2025</h1>
+  <div class="sub">CA Digital · Leads Inbound · Leads SEO</div>
+  <div class="update">
+    <span class="dot-live"></span>
+    <span id="last-update">Chargement...</span>
   </div>
 </div>
 
-<!-- KPI Q1 -->
-<div class="kpi-grid-q">
-  <div class="kpi-card" style="border-color:#3b82f6">
-    <div class="card-label">CA DIGITAL Q1</div>
-    <div class="card-value color-blue" id="val-q1-digital">0 €</div>
-    <div class="card-obj" id="obj-q1-digital">Objectif : —</div>
+<!-- ANNUAL -->
+<div class="section-label">Atteinte annuelle 2025 — Cumul</div>
+<div class="annual-grid">
+  <div class="annual-card">
+    <div class="label">CA Digital 2025</div>
+    <div class="pct" id="ann-digital-pct">—</div>
+    <div class="nums" id="ann-digital-nums">—</div>
+    <div class="bar-track"><div class="bar-fill" id="ann-digital-bar" style="width:0%"></div></div>
   </div>
-  <div class="kpi-card" style="border-color:#4ade80">
-    <div class="card-label">INBOUND Q1</div>
-    <div class="card-value color-green" id="val-q1-inbound">—</div>
-    <div class="card-obj" id="obj-q1-inbound">Objectif : — leads</div>
+  <div class="annual-card">
+    <div class="label">Leads Inbound 2025</div>
+    <div class="pct" id="ann-inbound-pct">—</div>
+    <div class="nums" id="ann-inbound-nums">—</div>
+    <div class="bar-track"><div class="bar-fill" id="ann-inbound-bar" style="width:0%"></div></div>
   </div>
-  <div class="kpi-card" style="border-color:#facc15">
-    <div class="card-label">LEADS SEO Q1</div>
-    <div class="card-value color-yellow" id="val-q1-seo">0</div>
-    <div class="card-obj" id="obj-q1-seo">Objectif : 0 leads</div>
-  </div>
-  <div class="kpi-card" style="border-color:#c084fc">
-    <div class="card-label">TOTAL LEADS SEO 2025</div>
-    <div class="card-value color-purple" id="val-total-seo">0</div>
-    <div class="card-obj" id="obj-total-seo">Objectif annuel : 0 leads</div>
+  <div class="annual-card">
+    <div class="label">Leads SEO 2025</div>
+    <div class="pct" id="ann-seo-pct">—</div>
+    <div class="nums" id="ann-seo-nums">—</div>
+    <div class="bar-track"><div class="bar-fill" id="ann-seo-bar" style="width:0%"></div></div>
   </div>
 </div>
 
-<!-- BANNER VARIABLE -->
-<div class="banner red" id="variable-banner">❌ Variable non déclenchée pour Q1 — Objectifs en cours d'atteinte</div>
+<!-- QUARTERLY CARDS -->
+<div class="section-label" style="margin-top:28px">Détail par trimestre — KPIs actuels</div>
 
-<!-- TABLES DÉTAIL -->
+<div class="section-label" style="margin-top:0; color:#58a6ff; text-transform:none; font-size:0.75rem; margin-bottom:8px">💰 CA Digital</div>
+<div class="q-grid" id="q-digital-grid"></div>
+
+<div class="section-label" style="margin-top:20px; color:#3fb950; text-transform:none; font-size:0.75rem; margin-bottom:8px">📥 Leads Inbound</div>
+<div class="q-grid" id="q-inbound-grid"></div>
+
+<div class="section-label" style="margin-top:20px; color:#bc8cff; text-transform:none; font-size:0.75rem; margin-bottom:8px">🔍 Leads SEO</div>
+<div class="q-grid" id="q-seo-grid"></div>
+
+<div class="divider"></div>
+
+<!-- TABLES -->
+<div class="section-label" style="margin-top:0">Tableau de suivi détaillé</div>
 <div class="tables-grid">
-  <div class="table-section">
-    <h3>💰 CA Digital</h3>
+  <div class="table-card">
+    <div class="table-header c-blue">💰 CA Digital</div>
     <table>
-      <thead><tr><th>PÉRIODE</th><th>RÉALISÉ</th><th>OBJECTIF</th><th>PROGRESSION</th></tr></thead>
+      <thead><tr><th>Période</th><th>Réalisé</th><th>Objectif</th><th>Progression</th></tr></thead>
       <tbody id="table-digital"></tbody>
     </table>
   </div>
-  <div class="table-section">
-    <h3>📥 Leads Inbound</h3>
+  <div class="table-card">
+    <div class="table-header c-green">📥 Leads Inbound</div>
     <table>
-      <thead><tr><th>PÉRIODE</th><th>RÉALISÉ</th><th>OBJECTIF</th><th>PROGRESSION</th></tr></thead>
+      <thead><tr><th>Période</th><th>Réalisé</th><th>Objectif</th><th>Progression</th></tr></thead>
       <tbody id="table-inbound"></tbody>
     </table>
   </div>
-  <div class="table-section">
-    <h3>🔍 Leads SEO</h3>
+  <div class="table-card">
+    <div class="table-header c-purple">🔍 Leads SEO</div>
     <table>
-      <thead><tr><th>PÉRIODE</th><th>RÉALISÉ</th><th>OBJECTIF</th><th>PROGRESSION</th></tr></thead>
+      <thead><tr><th>Période</th><th>Réalisé</th><th>Objectif</th><th>Progression</th></tr></thead>
       <tbody id="table-seo"></tbody>
     </table>
   </div>
 </div>
 
+<div class="divider"></div>
+
+<!-- VARIABLE RECAP -->
+<div class="section-label" style="margin-top:0">Déclenchement variable par trimestre</div>
+<div class="variable-grid" id="variable-grid"></div>
+
 <script>
 const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTBJmcK5aCY8lIGqOLnvgcKjO1I8uZMI90XkUagFMUXqXXoD4QKMwPnyZNifpMseYiAfn6fIlxo0hTk/pub?output=csv';
 
+function colorClass(pct) {
+  if (pct >= 100) return 'c-green';
+  if (pct >= 75) return 'c-yellow';
+  if (pct >= 40) return 'c-orange';
+  return 'c-red';
+}
+function fillClass(pct) {
+  if (pct >= 100) return 'fill-green';
+  if (pct >= 75) return 'fill-yellow';
+  if (pct >= 40) return 'fill-orange';
+  return 'fill-red';
+}
+function bgClass(pct) {
+  if (pct >= 100) return 'bg-green';
+  if (pct >= 75) return 'bg-yellow';
+  if (pct >= 40) return 'bg-orange';
+  return 'bg-red';
+}
 function fmt(n, type) {
-  if (n === null || n === undefined || isNaN(n)) return '—';
-  if (type === 'eur') return new Intl.NumberFormat('fr-FR', {style:'currency', currency:'EUR', maximumFractionDigits:0}).format(n);
-  if (type === 'pct') return Math.round(n) + '%';
-  return new Intl.NumberFormat('fr-FR').format(n);
+  if (type === 'eur') return Number(n).toLocaleString('fr-FR') + ' €';
+  return Number(n).toLocaleString('fr-FR');
 }
 
-function pctColor(p) {
-  if (p >= 100) return '#4ade80';
-  if (p >= 75) return '#facc15';
-  return '#f87171';
-}
-
-function buildTableRow(q, realise, objectif, type) {
-  const pct = objectif > 0 ? Math.min((realise / objectif) * 100, 100) : 0;
-  const color = pctColor(realise / objectif * 100);
-  const badges = { q1: 'q1', q2: 'q2', q3: 'q3', q4: 'q4' };
-  return `<tr>
-    <td><span class="q-badge ${badges[q]}">${q.toUpperCase()}</span></td>
-    <td>${type === 'eur' ? fmt(realise, 'eur') : fmt(realise)}</td>
-    <td>${type === 'eur' ? fmt(objectif, 'eur') : fmt(objectif)}</td>
-    <td style="min-width:120px">
-      <div style="display:flex;align-items:center;gap:8px">
-        <div style="flex:1;background:#2d3348;border-radius:4px;height:6px">
-          <div style="width:${pct}%;height:6px;border-radius:4px;background:${color}"></div>
-        </div>
-        <span class="pct-cell" style="color:${color};font-size:0.8rem">${Math.round(realise/objectif*100)}%</span>
-      </div>
-    </td>
-  </tr>`;
-}
+const qColors = ['c-blue','c-green','c-orange','c-purple'];
+const qBg = ['bg-blue','bg-green','bg-orange','bg-purple'];
 
 async function loadData() {
   try {
-    const res = await fetch(CSV_URL);
+    const res = await fetch(CSV_URL + '&t=' + Date.now());
     const text = await res.text();
-    const lines = text.trim().split('\n').slice(1); // skip header
+    const rows = text.trim().split('\n');
 
     const data = {};
-    lines.forEach(line => {
-      const cols = line.split(',');
-      const key = cols[0].trim().toLowerCase();
-      const realise = parseFloat(cols[1]) || 0;
-      const objectif = parseFloat(cols[2]) || 0;
-      data[key] = { realise, objectif };
+    rows.forEach(row => {
+      // Support virgule et point-virgule
+      const cols = row.split(/[,;]/);
+      if (cols.length >= 3) {
+        const key = cols[0].trim().replace(/"/g, '');
+        const realise = parseFloat(cols[1].toString().replace(/[^0-9.-]/g,'')) || 0;
+        const objectif = parseFloat(cols[2].toString().replace(/[^0-9.-]/g,'')) || 0;
+        data[key] = { realise, objectif };
+      }
     });
 
-    // Update timestamp
-    document.getElementById('last-update').textContent = new Date().toLocaleDateString('fr-FR') + ' ' + new Date().toLocaleTimeString('fr-FR', {hour:'2-digit',minute:'2-digit'});
+    console.log('DATA:', data); // debug
+
+    const now = new Date();
+    document.getElementById('last-update').textContent =
+      'Dernière mise à jour : ' + now.toLocaleDateString('fr-FR') + ' ' + now.toLocaleTimeString('fr-FR', {hour:'2-digit',minute:'2-digit'});
 
     const qs = ['q1','q2','q3','q4'];
 
-    // ANNUAL TOTALS
-    let totalDigitalR = 0, totalDigitalO = 0;
-    let totalInboundR = 0, totalInboundO = 0;
-    let totalSeoR = 0, totalSeoO = 0;
-
-    qs.forEach(q => {
-      if (data[`${q}_digital`]) { totalDigitalR += data[`${q}_digital`].realise; totalDigitalO += data[`${q}_digital`].objectif; }
-      if (data[`${q}_inbound`]) { totalInboundR += data[`${q}_inbound`].realise; totalInboundO += data[`${q}_inbound`].objectif; }
-      if (data[`${q}_leads_seo`]) { totalSeoR += data[`${q}_leads_seo`].realise; totalSeoO += data[`${q}_leads_seo`].objectif; }
-    });
-
-    const pDigital = totalDigitalO > 0 ? (totalDigitalR / totalDigitalO * 100) : 0;
-    const pInbound = totalInboundO > 0 ? (totalInboundR / totalInboundO * 100) : 0;
-    const pSeo = totalSeoO > 0 ? (totalSeoR / totalSeoO * 100) : 0;
-
-    document.getElementById('pct-annual-digital').textContent = Math.round(pDigital) + '%';
-    document.getElementById('pct-annual-digital').style.color = pctColor(pDigital);
-    document.getElementById('sub-annual-digital').textContent = fmt(totalDigitalR,'eur') + ' / ' + fmt(totalDigitalO,'eur');
-    document.getElementById('bar-annual-digital').style.width = Math.min(pDigital,100) + '%';
-
-    document.getElementById('pct-annual-inbound').textContent = Math.round(pInbound) + '%';
-    document.getElementById('pct-annual-inbound').style.color = pctColor(pInbound);
-    document.getElementById('sub-annual-inbound').textContent = fmt(totalInboundR) + ' / ' + fmt(totalInboundO) + ' leads';
-    document.getElementById('bar-annual-inbound').style.width = Math.min(pInbound,100) + '%';
-
-    document.getElementById('pct-annual-seo').textContent = Math.round(pSeo) + '%';
-    document.getElementById('pct-annual-seo').style.color = pctColor(pSeo);
-    document.getElementById('sub-annual-seo').textContent = fmt(totalSeoR) + ' / ' + fmt(totalSeoO) + ' leads';
-    document.getElementById('bar-annual-seo').style.width = Math.min(pSeo,100) + '%';
-
-    // Q1 KPI CARDS
-    const q1d = data['q1_digital'] || {realise:0,objectif:0};
-    const q1i = data['q1_inbound'] || {realise:0,objectif:0};
-    const q1s = data['q1_leads_seo'] || {realise:0,objectif:0};
-
-    document.getElementById('val-q1-digital').textContent = fmt(q1d.realise, 'eur');
-    document.getElementById('obj-q1-digital').textContent = 'Objectif : ' + fmt(q1d.objectif, 'eur');
-
-    document.getElementById('val-q1-inbound').textContent = fmt(q1i.realise);
-    document.getElementById('obj-q1-inbound').textContent = 'Objectif : ' + fmt(q1i.objectif) + ' leads';
-
-    document.getElementById('val-q1-seo').textContent = fmt(q1s.realise);
-    document.getElementById('obj-q1-seo').textContent = 'Objectif : ' + fmt(q1s.objectif) + ' leads';
-
-    document.getElementById('val-total-seo').textContent = fmt(totalSeoR);
-    document.getElementById('obj-total-seo').textContent = 'Objectif annuel : ' + fmt(totalSeoO) + ' leads';
-
-    // VARIABLE BANNER — Q1 : toutes métriques >= objectif ?
-    const q1DigitalOk = q1d.objectif > 0 && q1d.realise >= q1d.objectif;
-    const q1InboundOk = q1i.objectif > 0 && q1i.realise >= q1i.objectif;
-    const q1SeoOk = q1s.objectif > 0 && q1s.realise >= q1s.objectif;
-    const banner = document.getElementById('variable-banner');
-    if (q1DigitalOk && q1InboundOk && q1SeoOk) {
-      banner.className = 'banner green';
-      banner.textContent = '✅ Variable déclenchée pour Q1 — Tous les objectifs atteints !';
-    } else {
-      banner.className = 'banner red';
-      banner.textContent = '❌ Variable non déclenchée pour Q1 — Objectifs en cours d\'atteinte';
-    }
-
-    // TABLES
-    let htmlDigital = '', htmlInbound = '', htmlSeo = '';
+    // ANNUAL
+    let totalDigR=0, totalDigO=0, totalInbR=0, totalInbO=0, totalSeoR=0, totalSeoO=0;
     qs.forEach(q => {
       const d = data[`${q}_digital`] || {realise:0,objectif:0};
       const i = data[`${q}_inbound`] || {realise:0,objectif:0};
       const s = data[`${q}_leads_seo`] || {realise:0,objectif:0};
-      htmlDigital += buildTableRow(q, d.realise, d.objectif, 'eur');
-      htmlInbound += buildTableRow(q, i.realise, i.objectif, 'num');
-      htmlSeo += buildTableRow(q, s.realise, s.objectif, 'num');
+      totalDigR += d.realise; totalDigO += d.objectif;
+      totalInbR += i.realise; totalInbO += i.objectif;
+      totalSeoR += s.realise; totalSeoO += s.objectif;
     });
-    document.getElementById('table-digital').innerHTML = htmlDigital;
-    document.getElementById('table-inbound').innerHTML = htmlInbound;
-    document.getElementById('table-seo').innerHTML = htmlSeo;
+
+    function setAnnual(id, r, o, type) {
+      const pct = o > 0 ? Math.round(r/o*100) : 0;
+      const cc = colorClass(pct);
+      const fc = fillClass(pct);
+      document.getElementById(`ann-${id}-pct`).innerHTML = `<span class="${cc}">${pct}%</span>`;
+      document.getElementById(`ann-${id}-nums`).textContent = `${fmt(r,type)} / ${fmt(o,type)}`;
+      const bar = document.getElementById(`ann-${id}-bar`);
+      bar.style.width = Math.min(pct,100) + '%';
+      bar.className = `bar-fill ${fc}`;
+    }
+    setAnnual('digital', totalDigR, totalDigO, 'eur');
+    setAnnual('inbound', totalInbR, totalInbO, 'num');
+    setAnnual('seo', totalSeoR, totalSeoO, 'num');
+
+    // Q CARDS
+    function buildQGrid(containerId, metric, type) {
+      let html = '';
+      qs.forEach((q, i) => {
+        const d = data[`${q}_${metric}`] || {realise:0,objectif:0};
+        const pct = d.objectif > 0 ? Math.round(d.realise/d.objectif*100) : 0;
+        const cc = colorClass(pct);
+        const fc = fillClass(pct);
+        const bc = bgClass(pct);
+        html += `
+          <div class="q-card">
+            <div class="q-label">
+              <span class="${qColors[i]}">${q.toUpperCase()}</span>
+              <span class="q-badge ${bc}">${pct}%</span>
+            </div>
+            <div class="q-val ${cc}">${fmt(d.realise, type)}</div>
+            <div class="q-obj">Objectif : ${fmt(d.objectif, type)}</div>
+            <div class="bar-track" style="margin-top:10px"><div class="bar-fill ${fc}" style="width:${Math.min(pct,100)}%"></div></div>
+          </div>`;
+      });
+      document.getElementById(containerId).innerHTML = html;
+    }
+    buildQGrid('q-digital-grid', 'digital', 'eur');
+    buildQGrid('q-inbound-grid', 'inbound', 'num');
+    buildQGrid('q-seo-grid', 'leads_seo', 'num');
+
+    // TABLES
+    function buildTable(tbodyId, metric, type) {
+      let html = '';
+      qs.forEach((q, i) => {
+        const d = data[`${q}_${metric}`] || {realise:0,objectif:0};
+        const pct = d.objectif > 0 ? Math.round(d.realise/d.objectif*100) : 0;
+        const fc = fillClass(pct);
+        const cc = colorClass(pct);
+        html += `<tr>
+          <td><span class="q-badge ${qBg[i]}" style="font-size:0.7rem;font-weight:700;padding:2px 8px;border-radius:4px;">${q.toUpperCase()}</span></td>
+          <td style="font-weight:600">${fmt(d.realise, type)}</td>
+          <td style="color:#7d8590">${fmt(d.objectif, type)}</td>
+          <td class="td-prog">
+            <div class="mini-bar-track"><div class="mini-bar-fill ${fc}" style="width:${Math.min(pct,100)}%"></div></div>
+            <div class="pct-text ${cc}">${pct}%</div>
+          </td>
+        </tr>`;
+      });
+      document.getElementById(tbodyId).innerHTML = html;
+    }
+    buildTable('table-digital', 'digital', 'eur');
+    buildTable('table-inbound', 'inbound', 'num');
+    buildTable('table-seo', 'leads_seo', 'num');
+
+    // VARIABLE RECAP
+    let varHtml = '';
+    qs.forEach((q, i) => {
+      const d = data[`${q}_digital`] || {realise:0,objectif:0};
+      const inb = data[`${q}_inbound`] || {realise:0,objectif:0};
+      const seo = data[`${q}_leads_seo`] || {realise:0,objectif:0};
+
+      const digOk = d.objectif > 0 && d.realise >= d.objectif;
+      const inbOk = inb.objectif > 0 && inb.realise >= inb.objectif;
+      const seoOk = seo.objectif > 0 && seo.realise >= seo.objectif;
+      const allOk = digOk && inbOk && seoOk;
+      const noneStarted = d.realise === 0 && inb.realise === 0 && seo.realise === 0;
+
+      const statusText = allOk ? '✅ Déclenchée' : noneStarted ? '⏳ À venir' : '🔄 En cours';
+      const statusColor = allOk ? 'c-green' : noneStarted ? 'c-teal' : 'c-yellow';
+
+      const pill = (label, ok) => `<span class="v-pill ${ok ? 'bg-green' : 'bg-red'}">${ok ? '✓' : '✗'} ${label}</span>`;
+
+      varHtml += `
+        <div class="variable-card">
+          <div class="v-q ${qColors[i]}">${q.toUpperCase()}</div>
+          <div class="v-status ${statusColor}">${statusText}</div>
+          <div class="v-detail">
+            ${pill('CA Digital', digOk)}<br>
+            ${pill('Inbound', inbOk)}<br>
+            ${pill('Leads SEO', seoOk)}
+          </div>
+        </div>`;
+    });
+    document.getElementById('variable-grid').innerHTML = varHtml;
 
   } catch(e) {
-    console.error('Erreur chargement CSV:', e);
-    document.getElementById('last-update').textContent = 'Erreur de chargement';
+    console.error('Erreur:', e);
+    document.getElementById('last-update').textContent = 'Erreur de chargement — ' + e.message;
   }
 }
 
 loadData();
-setInterval(loadData, 300000); // refresh toutes les 5 min
+setInterval(loadData, 300000);
 </script>
 </body>
 </html>
